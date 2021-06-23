@@ -1,0 +1,109 @@
+<odoo>
+    <record id='library_book_action' model='ir.actions.act_window'>
+        <field name="name">Library Books</field>
+        <field name="res_model">library.book</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="My Library" id="library_base_menu"/>
+    <menuitem name="Books" id="library_book_menu" parent="library_base_menu" action="library_book_action"/>
+
+    <record id="library_book_view_form" model="ir.ui.view">
+        <field name="name">Library Book Form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="publisher_id"/>
+                        <field name="publisher_city"/>
+                        <field name="author_ids" widget="many2many_tags"/>
+                        <field name="active"/>
+                        <field name="category_id"/>
+                    </group>
+                    <group>
+
+                        <field name="state"/>
+                        <field name="pages"/>
+                        <field name="age_days"/>
+                        <field name="cost_price"/>
+                        <field name="currency_id"/>
+                        <field name="retail_price"/>
+                        <field name="notes"/>
+                    </group>
+                    <group>
+                        <field name="short_name"/>
+                        <field name="date_release"/>
+                        <field name="date_updated"/>
+                        <field name="cover" widget="image" class="oe_avatar"/>
+                        <field name="reader_rating"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="library_book_view_tree" model="ir.ui.view">
+        <field name="name">Library Book List</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_release"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="library_book_view_search" model="ir.ui.view">
+        <field name="name">Library Book Search</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="author_ids"/>
+                <filter string="No Authors"
+                        name="without_author"
+                        domain="[('author_ids','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="library_book_categ_id" model="ir.ui.view">
+        <field name="name"></field>
+        <field name="model">library.book.category</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="parent_id"/>
+                        <field name="child_ids"/>
+                        <field name="parent_path"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="library_category_id" model="ir.actions.act_window">
+        <field name="name">Book Category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">library.book.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="library_categ_menu_id" name="Book Category" parent="library_base_menu" action="library_category_id"/>
+</odoo>
