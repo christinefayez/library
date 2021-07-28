@@ -1,60 +1,59 @@
 <odoo>
-  <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="library.list">
-      <field name="name">library list</field>
-      <field name="model">library.library</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
-      </field>
-    </record>
--->
+    <data>
+        <record id="res_partner_inherit_form_view" model="ir.ui.view">
+            <field name="name">res.partner.form.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
 
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="library.action_window">
-      <field name="name">library window</field>
-      <field name="res_model">library.library</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="count_books"/>
 
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="library.action_server">
-      <field name="name">library server</field>
-      <field name="model_id" ref="model_library_library"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="published_book_ids">
+                        <field name="published_book_ids"/>
+                    </page>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="authored_book_ids">
+                        <field name="authored_book_ids"/>
+                    </page>
+                </xpath>
 
-    <!-- Top menu item -->
-<!--
-    <menuitem name="library" id="library.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="library.menu_1" parent="library.menu_root"/>
-    <menuitem name="Menu 2" id="library.menu_2" parent="library.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="library.menu_1_list" parent="library.menu_1"
-              action="library.action_window"/>
-    <menuitem name="Server to list" id="library" parent="library.menu_2"
-              action="library.action_server"/>
--->
-  </data>
+
+            </field>
+        </record>
+
+
+        <record id="member_form_view" model="ir.ui.view">
+            <field name="name"></field>
+            <field name="model">library.member</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="member_number"/>
+                            <field name="member_id"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="date_of_birth"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="library_member_action_id" model="ir.actions.act_window">
+            <field name="name">Members</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">library.member</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="member_categ_id" name="Library Members" parent="library.library_base_menu"
+                  action="library_member_action_id"/>
+    </data>
 </odoo>

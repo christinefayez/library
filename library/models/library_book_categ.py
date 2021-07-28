@@ -8,10 +8,7 @@ class LibraryBookCateg(models.Model):
     _description = 'New Description'
 
     name = fields.Char('Category')
-
-    # def _print(self):
-    #     print('hello')
-    # co_field = fields.Date(string="",store=True, required=False, compute="_print")
+    description = fields.Text(string="", required=False, )
     parent_id = fields.Many2one(
         'library.book.category',
         string='Parent Category',
@@ -20,11 +17,37 @@ class LibraryBookCateg(models.Model):
     child_ids = fields.One2many('library.book.category', 'parent_id', string='Child Categories')
     parent_path = fields.Char(index=True)
 
+    def create_category(self):
+        categ1 = {
+            'name': 'child categ1',
+            'description': 'desc categ1'
+        }
+        categ2 = {
+            'name': 'child categ2',
+            'description': 'desc categ2'
+
+        }
+        parent_categ = {
+            'name': 'tinaaaaaaaaaa',
+            'description': 'kkkkkkkkkkkkkkkkkkk',
+            'child_ids':
+                [(0, 0, categ1), (0, 0, categ2)]
+        }
+
+        record = self.create([categ1, categ2])
+
     @api.constrains('parent_id')
     def _check_hierarchy(self):
         if not self._check_recursion():
             raise models.ValidationError('Error! You cannot create recursive categories.')
 
-    def _check_recursion(self):
-        _sql_constraints = [
-            ('uniq_number', 'UNIQUE(name)', 'This number is already taken'), ]
+
+class LibraryMembers(models.Model):
+    _name = 'library.member'
+    _rec_name = 'member_id'
+
+    member_number = fields.Char()
+    member_id = fields.Many2one(comodel_name="res.partner", delegate=True, ondelete='cascade')
+    date_start = fields.Date(string="", required=False, )
+    date_end = fields.Date(string="", required=False, )
+    date_of_birth = fields.Date(string="", required=False, )

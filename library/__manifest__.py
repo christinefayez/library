@@ -14,7 +14,9 @@ Description related to library.
     'data': [
         'security/groups.xml',
         'security/ir.model.access.csv',
+        'data/cron_job.xml',
         'views/library_book.xml',
+        'views/views.xml',
 
     ],
 

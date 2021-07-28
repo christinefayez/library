@@ -1,13 +1,23 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 from datetime import timedelta
 
 
+class IrActionsServer(models.Model):
+    _inherit = 'ir.actions.server'
+
+    usage = fields.Selection(default=False)
+
+
 class LibraryBook(models.Model):
     _name = 'library.book'
+    _inherit = ['base.archive']
     _description = 'Library Book'
     _order = 'date_release desc, name'
     _rec_name = 'short_name'
+
+    def test_cron_library(self):
+        print('jjjjjjjjjjjjjjjjjjj')
 
     def name_get(self):
         result = []
@@ -36,7 +46,7 @@ class LibraryBook(models.Model):
     state = fields.Selection(
         [('draft', 'Not Available'),
          ('available', 'Available'),
-         ('lost', 'Lost')],
+         ('lost', 'Lost'), ('borrowed', 'Borrowed')],
         'State', default="draft")
 
     description = fields.Html('Description', sanitize=True, strip_style=False)
@@ -46,6 +56,7 @@ class LibraryBook(models.Model):
                            help='Total book page count', company_dependent=False)
     active = fields.Boolean('Active', default=True)
     cost_price = fields.Float('Book Cost', digits='Book Price')
+    ref_doc_id = fields.Reference(selection='_referencable_models')
     currency_id = fields.Many2one(
         'res.currency', string='Currency')
 
@@ -100,9 +111,89 @@ class LibraryBook(models.Model):
             if record.date_release and record.date_release > fields.Date.today():
                 raise models.ValidationError("date must be in the past")
 
+    @api.model
+    def _referencable_models(self):
+        models = self.env['ir.model'].search([('field_id.name', '=', 'message_ids')])
+        return [(x.model, x.name) for x in models]
+
+    @api.model
+    def is_allowed_trainstion(self, old_state, new_state):
+        allowed = [('draft', 'available'),
+                   ('available', 'borrowed'),
+                   ('borrowed', 'available'),
+                   ('available', 'lost'),
+                   ('borrowed', 'lost'),
+                   ('lost', 'available')]
+        return (old_state, new_state) in allowed
+        print(old_state, new_state)
+
+    def change_state(self, new_state):
+        for book in self:
+            print('sssssssssssssss')
+            if book.is_allowed_trainstion(book.state, new_state):
+                print('jjjjjjjjjjjjjjjjj')
+                book.state = new_state
+                print(book.state, new_state)
+            else:
+                msg = _('moving from %s to %s is not allowed') % (book.state, new_state)
+                raise ValidationError(msg)
+                continue
+
+    def make_borrowed(self):
+        self.change_state('borrowed')
+
+    def make_available(self):
+        self.change_state('available')
+
+    def make_lost(self):
+        self.change_state('lost')
+
+    def log_all_library_members(self):
+        library_member_model = self.env['library.member'].search([])
+        print(library_member_model)
+        return True
+
+    def change_release_date(self):
+        self.ensure_one()
+        self.date_release = fields.Date.today()
+
+    def chang_date_update(self):
+        self.ensure_one()
+        self.update({
+
+            'date_release': fields.Datetime.now()
+        })
+
+    def find_book(self):
+        domain = [
+            ('name', 'ilike', 'odoo12')
+        ]
+        book = self.search(domain)
+
+        print(book)
+
+    def books_with_multiple_author(self):
+
+        books = self.filtered(lambda l: len(l.author_ids) > 1)
+        print(books)
+
+    def books_mapped_author(self):
+        books = self.mapped('author_ids.name')
+        count = 0
+        for bo in books:
+            count += 1
+            print(count, bo)
+        return books
+
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     published_book_ids = fields.One2many('library.book', 'publisher_id', string='Published Books')
     authored_book_ids = fields.Many2many('library.book', string='Authored Books')
+    count_books = fields.Integer(string="Number Of Authored Books", compute="_compute_count_books")
+
+    @api.depends('authored_book_ids')
+    def _compute_count_books(self):
+        for r in self:
+            r.count_books = len(r.authored_book_ids)

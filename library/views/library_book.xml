@@ -12,37 +12,56 @@
         <field name="name">Library Book Form</field>
         <field name="model">library.book</field>
         <field name="arch" type="xml">
-            <form>
-                <group>
-                    <group>
-                        <field name="name"/>
-                        <field name="publisher_id"/>
-                        <field name="publisher_city"/>
-                        <field name="author_ids" widget="many2many_tags"/>
-                        <field name="active"/>
-                        <field name="category_id"/>
-                    </group>
-                    <group>
 
-                        <field name="state"/>
-                        <field name="pages"/>
-                        <field name="age_days"/>
-                        <field name="cost_price"/>
-                        <field name="currency_id"/>
-                        <field name="retail_price"/>
-                        <field name="notes"/>
-                    </group>
+            <form>
+                <header>
+                    <button name="toggle_active" type="object" string="Delete" class="oe_highlight"
+                            attrs="{'invisible': [('active', '=', False)]}">
+                        <field name="active" widget="boolean_button"/>
+                    </button>
+                    <button name="make_available" type="object" string="Make Available" class="oe_highlight"/>
+                    <button name="make_borrowed" type="object" string="Make Borrowed" class="oe_highlight"/>
+                    <button name="make_lost" type="object" string="Make Lost" class="oe_highlight"/>
+                    <button name="chang_date_update" type="object" string="Change Date" class="oe_highlight"/>
+                    <button name="log_all_library_members" type="object" string="Log Members" class="oe_highlight"/>
+                    <button name="find_book" type="object" string="Find Book" class="oe_highlight"/>
+                    <button name="books_mapped_author" type="object" string="mapped" class="oe_highlight"/>
+                    <button name="books_with_multiple_author" type="object" string="Filter" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+
+                </header>
+                <sheet>
                     <group>
-                        <field name="short_name"/>
-                        <field name="date_release"/>
-                        <field name="date_updated"/>
-                        <field name="cover" widget="image" class="oe_avatar"/>
-                        <field name="reader_rating"/>
+                        <group>
+                            <field name="name"/>
+                            <field name="publisher_id"/>
+                            <field name="publisher_city"/>
+                            <field name="author_ids" widget="many2many_tags"/>
+                            <field name="active"/>
+                            <field name="category_id"/>
+                            <field name="ref_doc_id"/>
+                        </group>
+                        <group>
+
+                            <field name="pages"/>
+                            <field name="age_days"/>
+                            <field name="cost_price"/>
+                            <field name="currency_id"/>
+                            <field name="retail_price"/>
+                            <field name="notes"/>
+                        </group>
+                        <group>
+                            <field name="short_name"/>
+                            <field name="date_release"/>
+                            <field name="date_updated"/>
+                            <field name="cover" widget="image" class="oe_avatar"/>
+                            <field name="reader_rating"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
                     </group>
-                    <group>
-                        <field name="description"/>
-                    </group>
-                </group>
+                </sheet>
             </form>
         </field>
     </record>
@@ -78,11 +97,15 @@
         <field name="model">library.book.category</field>
         <field name="arch" type="xml">
             <form string="">
+                <header>
+                    <button name="create_category" type="object" string="create record" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="description"/>
                         <field name="parent_id"/>
-                        <field name="child_ids"/>
+                        <field name="child_ids" widget="many2many_tags"/>
                         <field name="parent_path"/>
                     </group>
                 </sheet>
@@ -94,16 +117,8 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">library.book.category</field>
         <field name="view_mode">tree,form</field>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                <!-- Add Text Here -->
-            </p>
-            <p>
-                <!-- More details about what a user can do with this object will be OK -->
-            </p>
-        </field>
+
     </record>
 
-    <!-- This Menu Item must have a parent and an action -->
     <menuitem id="library_categ_menu_id" name="Book Category" parent="library_base_menu" action="library_category_id"/>
 </odoo>

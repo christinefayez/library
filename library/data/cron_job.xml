@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+
+        <record id="library_test_cron_job_id" model="ir.cron">
+            <field name="name">Test Cron Library</field>
+            <field name="model_id" ref="model_library_book"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.test_cron_library()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+
+    </data>
+</odoo>
