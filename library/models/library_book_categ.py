@@ -48,6 +48,6 @@ class LibraryMembers(models.Model):
 
     member_number = fields.Char()
     member_id = fields.Many2one(comodel_name="res.partner", delegate=True, ondelete='cascade')
-    date_start = fields.Date(string="", required=False, )
+    date_start = fields.Date(string="Start Date", required=False, )
     date_end = fields.Date(string="", required=False, )
     date_of_birth = fields.Date(string="", required=False, )
