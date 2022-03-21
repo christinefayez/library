@@ -39,7 +39,7 @@ class LibraryBookCateg(models.Model):
     @api.constrains('parent_id')
     def _check_hierarchy(self):
         if not self._check_recursion():
-            raise models.ValidationError('Error! You cannot create recursive categories.')
+            raise models.ValidationError('Error! Youu cannot create recursive categories.')
 
 
 class LibraryMembers(models.Model):
