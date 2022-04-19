@@ -7,9 +7,9 @@ Manage Library
 Description related to library.
 """,
     'author': "christine fayez",
-    'website': "http://www.example.com",
+    'website': "https://www.linkedin.com/in/christine-fayez-018593172",
+    'version': '15.0.1',
     'category': 'Uncategorized',
-    'version': '13.0.1',
     'depends': ['base'],
     'data': [
         'security/groups.xml',
