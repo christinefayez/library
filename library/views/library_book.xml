@@ -5,7 +5,10 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="My Library" id="library_base_menu"/>
+    <menuitem name="My Library" id="library_base_menu"
+              web_icon="library,static/description/icon.png"
+
+    />
     <menuitem name="Books" id="library_book_menu" parent="library_base_menu" action="library_book_action"/>
 
     <record id="library_book_view_form" model="ir.ui.view">
@@ -25,7 +28,7 @@
                     <button name="chang_date_update" type="object" string="Change Date" class="oe_highlight"/>
                     <button name="log_all_library_members" type="object" string="Log Members" class="oe_highlight"/>
                     <button name="find_book" type="object" string="Find Book" class="oe_highlight"/>
-                    <button name="books_mapped_author" type="object" string="mapped" class="oe_highlight"/>
+                    <button name="get_books" type="object" string="mapped" class="oe_highlight"/>
                     <button name="books_with_multiple_author" type="object" string="Filter" class="oe_highlight"/>
                     <field name="state" widget="statusbar"/>
 
@@ -53,6 +56,7 @@
                         <group>
                             <field name="short_name"/>
                             <field name="date_release"/>
+                            <!--                            <field name="is_like" force-save="1"/>-->
                             <field name="date_updated"/>
                             <field name="cover" widget="image" class="oe_avatar"/>
                             <field name="reader_rating"/>
@@ -61,6 +65,13 @@
                             <field name="description"/>
                         </group>
                     </group>
+                    <!--                    <notebook>-->
+                    <!--                        <page string="who is like this">-->
+                    <!--                            <group>-->
+                    <!--                                <field name="users_ids"/>-->
+                    <!--                            </group>-->
+                    <!--                        </page>-->
+                    <!--                    </notebook>-->
                 </sheet>
             </form>
         </field>
