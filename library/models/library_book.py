@@ -17,7 +17,7 @@ class LibraryBook(models.Model):
     _rec_name = 'short_name'
 
     def test_cron_library(self):
-        print('jjjjjjjjjjjjjjjjjjj')
+        pass
 
     def name_get(self):
         result = []
@@ -76,6 +76,26 @@ class LibraryBook(models.Model):
         # optional
         compute_sudo=True  # optional
     )
+    # is_like = fields.Boolean(compute="_get_user_likes", inverse="remove_users", store=True)
+    # users_ids = fields.Many2many(comodel_name="res.users")
+    #
+    # @api.depends('users_ids')
+    # def _get_user_likes(self):
+    #     print('jjjjjjjjjjj')
+    #     user = self.env.user
+    #     for rec in self:
+    #         if user.id not in rec.users_ids.ids:
+    #             rec.is_like == False
+    #         elif user.id in rec.users_ids.ids:
+    #             rec.is_like == True
+
+    # def remove_users(self):
+    #     print('inverse=======')
+    #     for rec in self:
+    #         if self.env.user.id not in rec.users_ids.ids and rec.is_like == True:
+    #             rec.users_ids = [(4, self.env.user.id)]
+    #         elif self.env.user.id in rec.users_ids.ids and rec.is_like == False:
+    #             rec.users_ids = [(3, self.env.user.id)]
 
     _sql_constraints = [
         ('name_uniq', 'UNIQUE (name)',
@@ -90,10 +110,8 @@ class LibraryBook(models.Model):
         for book in self:
             if book.date_release:
                 delta = today - book.date_release
-                print("hhhhhhhhhhhh")
                 book.age_days = delta.days
             else:
-                print("eeeeeeee")
 
                 book.age_days = 0
 
@@ -101,7 +119,6 @@ class LibraryBook(models.Model):
         today = fields.Date.today()
 
         for book in self.filtered('date_release'):
-            print('hcjhjhxuggg')
             d = today - timedelta(days=book.age_days)
         book.date_release = d
 
@@ -125,15 +142,11 @@ class LibraryBook(models.Model):
                    ('borrowed', 'lost'),
                    ('lost', 'available')]
         return (old_state, new_state) in allowed
-        print(old_state, new_state)
 
     def change_state(self, new_state):
         for book in self:
-            print('sssssssssssssss')
             if book.is_allowed_trainstion(book.state, new_state):
-                print('jjjjjjjjjjjjjjjjj')
                 book.state = new_state
-                print(book.state, new_state)
             else:
                 msg = _('moving from %s to %s is not allowed') % (book.state, new_state)
                 raise ValidationError(msg)
@@ -150,7 +163,6 @@ class LibraryBook(models.Model):
 
     def log_all_library_members(self):
         library_member_model = self.env['library.member'].search([])
-        print(library_member_model)
         return True
 
     def change_release_date(self):
@@ -169,21 +181,28 @@ class LibraryBook(models.Model):
             ('name', 'ilike', 'odoo12')
         ]
         book = self.search(domain)
-
-        print(book)
+        com = self.search([('active', '=', True)])
+        com2 = self.search([('pages', '!=', 0)])
+        print(com | com2, 'compination record set with no duplicate')
 
     def books_with_multiple_author(self):
 
         books = self.filtered(lambda l: len(l.author_ids) > 1)
-        print(books)
+        categ = self.filtered('category_id')
+        print('books filter===========', books, categ)
 
-    def books_mapped_author(self):
-        books = self.mapped('author_ids.name')
+    def get_books(self):
+        books = self.search([])
+        self.books_mapped_author(books)
+
+    def books_mapped_author(self, books):
+        bookss = books.mapped('author_ids.name')
+        print(bookss, 'books======')
         count = 0
-        for bo in books:
+        for bo in bookss:
             count += 1
             print(count, bo)
-        return books
+        return bookss
 
 
 class ResPartner(models.Model):
