@@ -1,18 +1,19 @@
-# -*- coding: utf-8 -*-
+from odoo import models, fields, api
+from datetime import timedelta
 
-# from odoo import models, fields, api
+
+class LibraryBookInherit(models.Model):
+    _inherit = 'library.book'
+
+    date_return = fields.Date(string="Date To Return")
+
+    def make_borrowed(self):
+        day_to_borrow = self.category_id.max_borrow_days or 10
+        self.date_return = fields.date.today() + timedelta(days=day_to_borrow)
+        return super(LibraryBookInherit, self).make_borrowed()
 
 
-# class my_library_return(models.Model):
-#     _name = 'my_library_return.my_library_return'
-#     _description = 'my_library_return.my_library_return'
+class CategoryObject(models.Model):
+    _inherit = 'library.book.category'
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+    max_borrow_days = fields.Integer(string="Maximum Borrow Days", default=10)
