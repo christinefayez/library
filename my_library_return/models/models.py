@@ -12,6 +12,10 @@ class LibraryBookInherit(models.Model):
         self.date_return = fields.date.today() + timedelta(days=day_to_borrow)
         return super(LibraryBookInherit, self).make_borrowed()
 
+    def make_available(self):
+        self.date_return = False
+        return super(LibraryBookInherit, self).make_available()
+
 
 class CategoryObject(models.Model):
     _inherit = 'library.book.category'

@@ -22,12 +22,14 @@ class LibraryBook(models.Model):
     def name_get(self):
         result = []
         for rec in self:
-            rec_name = "%s (%s)" % (rec.name, rec.date_release)
+            authors = rec.author_ids.mapped('name')
+            rec_name = "%s (%s)" % (rec.name, ','.join(authors))
             result.append((rec.id, rec_name))
         return result
 
     notes = fields.Text('Internal Notes')
     name = fields.Char('Title', required=True)
+    isban = fields.Char('ISBAN', required=True)
     date_release = fields.Date('Release Date')
     author_ids = fields.Many2many(
         'res.partner',
@@ -35,6 +37,7 @@ class LibraryBook(models.Model):
     )
 
     cover = fields.Binary('Book Cover')
+    manager_remarkes = fields.Text(string="Manager Remarks", required=False, )
     out_of_print = fields.Boolean('Out of Print?')
     date_release = fields.Date('Release Date', default=fields.Date.today())
     date_updated = fields.Datetime('Last Updated', default=fields.Datetime.now())
@@ -76,26 +79,6 @@ class LibraryBook(models.Model):
         # optional
         compute_sudo=True  # optional
     )
-    # is_like = fields.Boolean(compute="_get_user_likes", inverse="remove_users", store=True)
-    # users_ids = fields.Many2many(comodel_name="res.users")
-    #
-    # @api.depends('users_ids')
-    # def _get_user_likes(self):
-    #     print('jjjjjjjjjjj')
-    #     user = self.env.user
-    #     for rec in self:
-    #         if user.id not in rec.users_ids.ids:
-    #             rec.is_like == False
-    #         elif user.id in rec.users_ids.ids:
-    #             rec.is_like == True
-
-    # def remove_users(self):
-    #     print('inverse=======')
-    #     for rec in self:
-    #         if self.env.user.id not in rec.users_ids.ids and rec.is_like == True:
-    #             rec.users_ids = [(4, self.env.user.id)]
-    #         elif self.env.user.id in rec.users_ids.ids and rec.is_like == False:
-    #             rec.users_ids = [(3, self.env.user.id)]
 
     _sql_constraints = [
         ('name_uniq', 'UNIQUE (name)',
@@ -203,6 +186,19 @@ class LibraryBook(models.Model):
             count += 1
             print(count, bo)
         return bookss
+
+    @api.model
+    def create(self, vals):
+        if not self.user_has_groups('library.group_librarian'):
+            if 'manager_remarkes' in vals and vals['manager_remarkes']:
+                raise UserError(_('u are not allowed to modify manager remarkes'))
+        return super(LibraryBook, self).create(vals)
+
+    def write(self, vals):
+        if not self.user_has_groups('library.group_librarian'):
+            if 'manager_remarkes' in vals and vals['manager_remarkes']:
+                del vals['manager_remarkes']
+        return super(LibraryBook, self).write(vals)
 
 
 class ResPartner(models.Model):

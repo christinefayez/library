@@ -37,6 +37,7 @@
                     <group>
                         <group>
                             <field name="name"/>
+                            <field name="isban"/>
                             <field name="publisher_id"/>
                             <field name="publisher_city"/>
                             <field name="author_ids" widget="many2many_tags"/>
@@ -55,6 +56,7 @@
                         </group>
                         <group>
                             <field name="short_name"/>
+                            <field name="manager_remarkes"/>
                             <field name="date_release"/>
                             <!--                            <field name="is_like" force-save="1"/>-->
                             <field name="date_updated"/>
