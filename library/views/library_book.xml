@@ -29,6 +29,7 @@
                     <button name="log_all_library_members" type="object" string="Log Members" class="oe_highlight"/>
                     <button name="find_book" type="object" string="Find Book" class="oe_highlight"/>
                     <button name="get_books" type="object" string="mapped" class="oe_highlight"/>
+                    <button name="get_average_cost" type="object" string="Get Average Cost" class="oe_highlight"/>
                     <button name="books_with_multiple_author" type="object" string="Filter" class="oe_highlight"/>
                     <field name="state" widget="statusbar"/>
 
@@ -39,6 +40,7 @@
                             <field name="name"/>
                             <field name="isban"/>
                             <field name="publisher_id"/>
+                            <field name="old_edition"/>
                             <field name="publisher_city"/>
                             <field name="author_ids" widget="many2many_tags"/>
                             <field name="active"/>
@@ -86,6 +88,15 @@
             <tree>
                 <field name="name"/>
                 <field name="date_release"/>
+                <field name="state"/>
+                <field name="pages"/>
+                <field name="age_days"/>
+                <field name="cost_price"/>
+                <field name="currency_id"/>
+                <field name="retail_price"/>
+                <field name="notes"/>
+                                            <field name="category_id"/>
+
             </tree>
         </field>
     </record>

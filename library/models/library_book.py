@@ -27,7 +27,19 @@ class LibraryBook(models.Model):
             result.append((rec.id, rec_name))
         return result
 
+    @api.model
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
+        print('login search')
+        args = [] if args is None else args.copy()
+        if not (name == ' ' and operator == 'ilike'):
+            args += ['|', '|', ('name', operator, name),
+                     ('isban', operator, name),
+                     ('author_ids.name', operator, name)]
+            print('args=====', args)
+        return self._search(args, limit=limit, access_rights_uid=name_get_uid)
+
     notes = fields.Text('Internal Notes')
+    old_edition = fields.Many2one(comodel_name="library.book")
     name = fields.Char('Title', required=True)
     isban = fields.Char('ISBAN', required=True)
     date_release = fields.Date('Release Date')
@@ -86,6 +98,16 @@ class LibraryBook(models.Model):
         ('positive_page', 'CHECK(pages>0)',
          'No of pages must be positive')
     ]
+
+    def get_average_cost(self):
+        grouped_result = self.read_group([('cost_price', '!=', False)], ['category_id', 'average:avg(cost_price)'],
+                                         ['category_id'],lazy=False)
+        print(grouped_result)
+        for p in grouped_result:
+            print(p)
+            print(p['average'])
+
+        return grouped_result
 
     @api.depends('date_release')
     def _compute_age(self):
