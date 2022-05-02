@@ -104,7 +104,6 @@ class LibraryBook(models.Model):
                                          ['category_id'],lazy=False)
         print(grouped_result)
         for p in grouped_result:
-            print(p)
             print(p['average'])
 
         return grouped_result
