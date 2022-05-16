@@ -15,10 +15,11 @@ Description related to library.
         'security/groups.xml',
         'security/ir.model.access.csv',
         'data/cron_job.xml',
+        'data/library_book_data.xml',
         'views/library_book.xml',
         'views/views.xml',
 
     ],
 
-    'demo': ['demo.xml'],
+    'demo': ['demo/demo.xml'],
 }

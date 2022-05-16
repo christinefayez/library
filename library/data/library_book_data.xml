@@ -1,0 +1,29 @@
+<odoo>
+
+        <record id="book_cookbook_14" model='library.book'>
+            <field name="short_name">odoo cookbook</field>
+            <field name="name">odoo cookbook14</field>
+            <field name="pages">1000</field>
+            <field name="isban">gfgvkjfdlkjfd</field>
+        </record>
+    <record id="book_cookbook_15" model='library.book'>
+            <field name="short_name">odoo cookbook 15</field>
+            <field name="name">odoo cookbook15</field>
+            <field name="pages">1000</field>
+            <field name="isban">gfgvfd</field>
+        </record>
+    <record id="book_cookbook_16" model='library.book'>
+        <field name="short_name">odoo cookbook 16</field>
+        <field name="name">odoo cookbook16</field>
+        <field name="pages">1000</field>
+        <field name="isban">gferrgvfd</field>
+    </record>
+
+
+
+    <record id="res_partner_packt" model="res.partner">
+        <field name="name">packt publishing</field>
+        <field name="city"> egypt</field>
+        <field name="country_id" ref="base.uk"/>
+    </record>
+</odoo>
