@@ -5,7 +5,7 @@ from datetime import timedelta
 class LibraryBookInherit(models.Model):
     _inherit = 'library.book'
 
-    date_return = fields.Date(string="Date To  Return")
+    date_return = fields.Date(string="Date To Return")
 
     def make_borrowed(self):
         day_to_borrow = self.category_id.max_borrow_days or 10
