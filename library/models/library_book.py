@@ -189,7 +189,7 @@ class LibraryBook(models.Model):
         book = self.search(domain)
         com = self.search([('active', '=', True)])
         com2 = self.search([('pages', '!=', 0)])
-        print(com | com2, 'compination record set with no duplicate')
+        print(com | com2, 'compination record set with no duplicateeeee')
 
     def books_with_multiple_author(self):
 
