@@ -187,6 +187,8 @@ class LibraryBook(models.Model):
             ('name', 'ilike', 'odoo12')
         ]
         book = self.search(domain)
+        print(book)
+
         com = self.search([('active', '=', True)])
         com2 = self.search([('pages', '!=', 0)])
         print(com | com2, 'compination record set with no duplicate')
