@@ -124,6 +124,8 @@ class LibraryBook(models.Model):
 
         for book in self.filtered('date_release'):
             d = today - timedelta(days=book.age_days)
+            print(d)
+
         book.date_release = d
 
     @api.constrains('date_release')
