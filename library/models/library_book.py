@@ -177,7 +177,7 @@ class LibraryBook(models.Model):
 
     def chang_date_update(self):
         self.ensure_one()
-        self.update({
+        self.write({
 
             'date_release': fields.Datetime.now()
         })
