@@ -101,7 +101,7 @@ class LibraryBook(models.Model):
 
     def get_average_cost(self):
         grouped_result = self.read_group([('cost_price', '!=', False)], ['category_id', 'average:avg(cost_price)'],
-                                         ['category_id'],lazy=False)
+                                         ['category_id'], lazy=False)
         print(grouped_result)
         for p in grouped_result:
             print(p['average'])
