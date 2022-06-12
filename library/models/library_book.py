@@ -181,6 +181,8 @@ class LibraryBook(models.Model):
 
             'date_release': fields.Datetime.now()
         })
+        print('llllllllll')
+        print('mmmmmmmm')
 
     def find_book(self):
         domain = [
