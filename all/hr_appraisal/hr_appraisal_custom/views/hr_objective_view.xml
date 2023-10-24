@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="hr_objective_form">
+            <field name="name">Hr Objective Form</field>
+            <field name="model">hr.objective</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_objective_tree">
+            <field name="name">Hr Objective Tree</field>
+            <field name="model">hr.objective</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="hr_objective_action_window">
+            <field name="name">Hr Objective Action</field>
+            <field name="res_model">hr.objective</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_appraisal_objective_form">
+            <field name="name">Hr Appraisal Objective Form</field>
+            <field name="model">hr.appraisal.objective</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+<!--                            <field name="name" readonly="1"/>-->
+                            <field name="title" readonly="1"/>
+                            <field name="weight" readonly="1"/>
+                            <field name="fixed" readonly="1"/>
+                            <field name="description" readonly="0"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_appraisal_objective_tree">
+            <field name="name">Hr Appraisal Objective Tree</field>
+            <field name="model">hr.appraisal.objective</field>
+            <field name="arch" type="xml">
+                <tree>
+<!--                    <field name="name"/>-->
+                    <field name="title"/>
+                    <field name="weight"/>
+                    <field name="fixed"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="hr_appraisal_objective_action_window">
+            <field name="name">Hr Appraisal Objective Action</field>
+            <field name="res_model">hr.appraisal.objective</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+<!--        <menuitem name="Appraisal Objective" id="hr_appraisal_custom.hr_objective_menu"-->
+<!--                  parent="hr_appraisal.menu_hr_appraisal_configuration"-->
+<!--                  action="hr_appraisal_custom.hr_objective_action_window"/>-->
+
+    </data>
+</odoo>

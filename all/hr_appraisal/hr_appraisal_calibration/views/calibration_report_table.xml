@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_calibration_report_graph">
+        <field name="name">calibration..report.view.graph</field>
+        <field name="model">calibration.report.view</field>
+        <field name="arch" type="xml">
+            <graph string="Calibration View" type="line">
+                <field name="target" type="row"/>
+                <!--                <field name="min_perc" type="measure"/>-->
+                <!--                <field name="max_perc" type="measure"/>-->
+                <field name="percentage" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_calibration_report_graph_grouped_department">
+        <field name="name">calibration..report.view.graph.grouped.department</field>
+        <field name="model">calibration.report.view.grouped.d</field>
+        <field name="arch" type="xml">
+            <graph string="Calibration View" type="line">
+                <field name="target" type="row"/>
+                <!--                <field name="min_perc" type="measure"/>-->
+                <!--                <field name="max_perc" type="measure"/>-->
+                <field name="percentage" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_calibration_report_graph_grouped_rating">
+        <field name="name">calibration..report.view.graph.grouped.rating</field>
+        <field name="model">calibration.report.view.grouped.r</field>
+        <field name="arch" type="xml">
+            <graph string="Calibration View" type="line">
+                <field name="target" type="row"/>
+                <!--                <field name="min_perc" type="measure"/>-->
+                <!--                <field name="max_perc" type="measure"/>-->
+                <field name="percentage" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_calibration_report_pivot" model="ir.ui.view">
+        <field name="name">calibration.report.view.pivot</field>
+        <field name="model">calibration.report.view</field>
+        <field name="arch" type="xml">
+            <pivot string="Calibration View" disable_linking="True">
+                <field name="year" type="col"/>
+                <field name="target_name" type="row"/>
+                <!--                <field name="min_perc" type="measure"/>-->
+                <!--                <field name="max_perc" type="measure"/>-->
+                <field name="percentage" type="measure"/>
+                <field name="target_appraisals" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_calibration_report_pivot_grouped_department" model="ir.ui.view">
+        <field name="name">calibration.report.view.pivot.grouped.department</field>
+        <field name="model">calibration.report.view.grouped.d</field>
+        <field name="arch" type="xml">
+            <pivot string="Calibration View" disable_linking="True">
+                <field name="year" type="col"/>
+                <field name="target_name" type="row"/>
+                <!--                <field name="min_perc" type="measure"/>-->
+                <!--                <field name="max_perc" type="measure"/>-->
+                <field name="percentage" type="measure"/>
+                <field name="target_appraisals" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_calibration_report_pivot_grouped_rating" model="ir.ui.view">
+        <field name="name">calibration.report.view.pivot.grouped.rating</field>
+        <field name="model">calibration.report.view.grouped.r</field>
+        <field name="arch" type="xml">
+            <pivot string="Calibration View" disable_linking="True">
+                <field name="year" type="col"/>
+                <field name="target_name" type="row"/>
+                <!--                <field name="min_perc" type="measure"/>-->
+                <!--                <field name="max_perc" type="measure"/>-->
+                <field name="percentage" type="measure"/>
+                <field name="target_appraisals" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="calibration_report_view_tree" model="ir.ui.view">
+        <field name="name">report.calibration.report.view.tree</field>
+        <field name="model">calibration.report.view</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" delete="0" decoration-success="percentage&gt;=min_perc and percentage&lt;=max_perc"
+                              decoration-warning="percentage&lt;min_perc" decoration-danger="percentage&gt;max_perc">
+                <field name="target"/>
+                <field name="target_name"/>
+                <field name="min_perc"/>
+                <field name="max_perc"/>
+                <field name="target_appraisals" sum="Number of Employees"/>
+                <field name="percentage" sum="Total Percentage"/>
+                <!--                <field name="total_appraisals"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="calibration_report_view_tree_grouped_department" model="ir.ui.view">
+        <field name="name">report.calibration.report.view.grouped.department.tree</field>
+        <field name="model">calibration.report.view.grouped.d</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" delete="0" decoration-success="percentage&gt;=min_perc and percentage&lt;=max_perc"
+                              decoration-warning="percentage&lt;min_perc" decoration-danger="percentage&gt;max_perc">
+                <field name="department"/>
+                <field name="target"/>
+                <field name="target_name"/>
+                <field name="min_perc"/>
+                <field name="max_perc"/>
+                <field name="target_appraisals" sum="Number of Employees"/>
+                <field name="percentage" sum="Total Percentage"/>
+                <!--                <field name="total_appraisals"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="calibration_report_view_tree_grouped_rating" model="ir.ui.view">
+        <field name="name">report.calibration.report.view.grouped.rating.tree</field>
+        <field name="model">calibration.report.view.grouped.r</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" delete="0" decoration-success="percentage&gt;=min_perc and percentage&lt;=max_perc"
+                              decoration-warning="percentage&lt;min_perc" decoration-danger="percentage&gt;max_perc">
+                <field name="target"/>
+                <field name="department"/>
+                <field name="target_name"/>
+                <field name="min_perc"/>
+                <field name="max_perc"/>
+                <field name="target_appraisals" sum="Number of Employees"/>
+                <field name="percentage" sum="Total Percentage"/>
+                <!--                <field name="total_appraisals"/>-->
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_calibration_report_table" model="ir.actions.act_window">
+        <field name="name">Calibration Report Table View</field>
+        <field name="res_model">calibration.report.view</field>
+        <field name="view_mode">tree,graph</field>
+    </record>
+
+    <record id="action_calibration_report_table_grouped_department" model="ir.actions.act_window">
+        <field name="name">Calibration Report Table View Grouped Department</field>
+        <field name="res_model">calibration.report.view.grouped.d</field>
+        <field name="view_mode">tree,graph</field>
+    </record>
+
+    <record id="action_calibration_report_table_grouped_rating" model="ir.actions.act_window">
+        <field name="name">Calibration Report Table View Grouped Rating</field>
+        <field name="res_model">calibration.report.view.grouped.r</field>
+        <field name="view_mode">tree,graph</field>
+    </record>
+
+</odoo>

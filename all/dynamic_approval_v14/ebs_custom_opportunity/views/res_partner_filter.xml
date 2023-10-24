@@ -1,0 +1,13 @@
+
+<odoo>
+    <record id="view_customer_filter_inherit" model="ir.ui.view">
+        <field name="name">view.partner.filter.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="name" filter_domain="['|', '|', '|', ('display_name', 'ilike', self), ('ref', '=', self), ('email', 'ilike', self), ('customer_sequence', 'ilike', self)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

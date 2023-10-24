@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+          <record id="group_restrict_action_menu" model="res.groups">
+            <field name="name">Restrict Product</field>
+<!--            <field name="category_id" ref="rev_sec.module_game_store"/>-->
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+    </data>
+</odoo>

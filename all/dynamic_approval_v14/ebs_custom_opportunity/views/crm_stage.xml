@@ -1,0 +1,31 @@
+<odoo>
+
+    <record id="view_crm_stage_form_extended" model="ir.ui.view">
+        <field name="name">crm.stage.form.extended</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <group>
+                    <field name="forecast_category_ids" widget="many2many_tags"/>
+                    <field name="default_forecast_category_id"  domain="[('id','in',forecast_category_ids)]"/>
+                    <field name="is_default"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_crm_stage_tree_extended" model="ir.ui.view">
+        <field name="name">crm.stage.tree.extended</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="forecast_category_ids" widget="many2many_tags"/>
+                <field name="default_forecast_category_id"  domain="[('id','in',forecast_category_ids)]"/>
+                <field name="is_default"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

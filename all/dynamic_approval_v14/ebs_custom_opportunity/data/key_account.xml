@@ -1,0 +1,27 @@
+<odoo noupdate="1">
+
+    <record id="mubadalla_key_account" model="key.account">
+        <field name="name">Mubadalla</field>
+    </record>
+
+    <record id="seha_key_account" model="key.account">
+        <field name="name">SEHA</field>
+    </record>
+
+    <record id="mopa_key_account" model="key.account">
+        <field name="name">MOPA</field>
+    </record>
+
+    <record id="ghq_key_account" model="key.account">
+        <field name="name">GHQ</field>
+    </record>
+
+    <record id="moh_key_account" model="key.account">
+        <field name="name">MOH</field>
+    </record>
+
+    <record id="dha_key_account" model="key.account">
+        <field name="name">DHA</field>
+    </record>
+
+</odoo>

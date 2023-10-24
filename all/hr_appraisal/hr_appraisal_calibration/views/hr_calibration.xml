@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="hr_calibration_view_from">
+            <field name="name">hr calibration form</field>
+            <field name="model">hr.calibration</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <sheet>
+                        <group>
+                            <field name="year"/>
+                            <field name="target">
+                                <tree editable="top">
+                                    <field name="target"/>
+                                    <field name="name"/>
+                                    <field name="min"/>
+                                    <field name="max"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <footer>
+                            <button string="View Appraisals"
+                                    class="btn btn-primary" type="object" name="redirect_to_calibration"> (<field name="appraisal_no"/>)</button>
+
+                            <button string="Copy Ratings" style="margin-left: 20px;"
+                                    class="btn btn-primary" type="object" name="copy_manager_ratings"
+                                    confirm="Are you sure to copy the Manager Ratings to replace the HR Ratings?"/>
+
+                            <button string="Release Ratings" style="margin-left: 20px; background:#3b883b"
+                                    class="btn btn-primary" type="object" name="move_next"
+                                    confirm="Are you sure to release the ratings? This will move the appraisals to the next stage"/>
+
+                            <button string="Notify Managers" style="margin-left: 20px; background:#ab3939"
+                                    class="btn btn-primary" type="object" name="move_previous"
+                                    confirm="Are you sure to notify the managers? This will move the appraisals to the previous stage"/>
+
+                            <button string="View Overall Results" style="margin-left: 20px;"
+                                    class="btn btn-primary" type="object" name="redirect_to_calibration_report"/>
+
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="hr_calibration_tree_view">
+            <field name="name">hr.calibration.tree</field>
+            <field name="model">hr.calibration</field>
+            <field name="arch" type="xml">
+                <tree string="Calibration">
+                    <field name="year"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="hr_appraisal_calibration_action_window">
+            <field name="name">Hr Appraisal Calibration</field>
+            <field name="res_model">hr.calibration</field>
+            <field name="view_mode">tree,form</field>
+            <!--            <field name="domain">[('stage_id', '=', 'Calibration')]-->
+            <!--            </field>-->
+
+        </record>
+        <!--        <record id="hr_calibration_tree_action_view" model="ir.actions.act_window">-->
+        <!--            <field name="name">Redirect Calibration</field>-->
+        <!--            <field name="res_model">hr.calibration</field>-->
+        <!--            <field name="view_mode">tree,form</field>-->
+        <!--            <field name="view_id" ref="hr_calibration_tree_view"/>-->
+        <!--            <field name="target">new</field>-->
+        <!--        </record>-->
+
+<!--        <menuitem name="Calibration" id="hr_appraisal_calibration_menuitem_main"-->
+<!--                  parent="hr_appraisal.menu_hr_appraisal_root"-->
+<!--                  action="hr_appraisal_calibration_action_window" groups="base.group_user"/>-->
+
+
+        <menuitem name="Calibration" id="hr_appraisal_calibration_menuitem"
+                  parent="hr_appraisal.menu_hr_appraisal_root"
+                  action="hr_appraisal_calibration_action_window"
+                  sequence="11"/>
+<!--                  groups="security_rules.group_strata_hc"-->
+
+    </data>
+
+</odoo>

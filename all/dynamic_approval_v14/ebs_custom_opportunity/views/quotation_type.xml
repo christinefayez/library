@@ -1,0 +1,25 @@
+<odoo>
+
+    <record model="ir.ui.view" id="quotation_type_tree_view">
+        <field name="name">quotation.type.tree.view</field>
+        <field name="model">quotation.type</field>
+        <field name="arch" type="xml">
+            <tree editable="top" default_order="create_date desc">
+                <field name="name" required="1"/>
+                <field name="create_date" string="Created on"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_quotation_type">
+        <field name="name">Quotation Type</field>
+        <field name="res_model">quotation.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem name="Quotation Type" id="menu_quotation_type" parent="sale.menu_sale_config"
+              action="action_quotation_type" sequence="15"/>
+
+</odoo>

@@ -1,0 +1,50 @@
+<odoo>
+
+    <record id="crm_lead_forecast_category_tree" model="ir.ui.view">
+        <field name="name">crm.lead.forecast.category.tree</field>
+        <field name="model">crm.lead.forecast.category</field>
+        <field name="arch" type="xml">
+            <tree string="Forecast Category" editable="top">
+                <field name="name"/>
+                <field name="crm_stage_ids" widget="many2many_tags"/>
+                <field name="active" widget="boolean_toggle"/>
+                <field name="appear_risk" widget="boolean_toggle"/>
+                <field name="is_upside" widget="boolean_toggle"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="crm_lead_forecast_category_form" model="ir.ui.view">
+        <field name="name">crm.lead.forecast.category.form</field>
+        <field name="model">crm.lead.forecast.category</field>
+        <field name="arch" type="xml">
+            <form string="Forecast Category">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active" widget="boolean_toggle"/>
+                        <field name="appear_risk" widget="boolean_toggle"/>
+                        <field name="is_upside" widget="boolean_toggle"/>
+                        <field name="crm_stage_ids" widget="many2many_tags"/>
+                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="crm_lead_forecast_category_action" model="ir.actions.act_window">
+        <field name="name">Forecast Category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.lead.forecast.category</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="crm_lead_forecast_category_menu"
+              name="Forecast Category"
+              parent="crm.menu_crm_config_lead"
+              action="crm_lead_forecast_category_action"
+              sequence="10"/>
+
+</odoo>

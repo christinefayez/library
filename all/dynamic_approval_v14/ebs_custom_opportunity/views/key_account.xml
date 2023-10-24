@@ -1,0 +1,24 @@
+<odoo>
+
+    <record id="key_account_view_tree" model="ir.ui.view">
+        <field name="name">key.account.tree</field>
+        <field name="model">key.account</field>
+        <field name="arch" type="xml">
+            <tree string="Key Account" editable="bottom">
+                <field name="name"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="contact_major_key_account_action" model="ir.actions.act_window">
+        <field name="name">Major Key Accounts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">key.account</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="contact_major_key_account_menu" parent="contacts.res_partner_menu_config"
+              name="Major Key Accounts" action="contact_major_key_account_action"/>
+
+</odoo>

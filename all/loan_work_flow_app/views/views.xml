@@ -1,0 +1,44 @@
+<odoo>
+
+    <record id="hr_loan_inherit_id" model="ir.ui.view">
+        <field name="name">hr.loan.inherit</field>
+        <field name="model">hr.loan</field>
+        <field name="inherit_id" ref="ohrms_loan.hr_loan_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,doo,dof,ceo,waiting_approval_1,approve</attribute>
+
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <field name="doo_user_id" invisible="1"/>
+                <field name="dof_user_id" invisible="1"/>
+                <field name="ceo_user_id" invisible="1"/>
+                <button name="doo_approve" type="object" states="draft,sent,waiting_approval_1" string="DOO Approve"
+                        class="oe_highlight" groups="loan_work_flow_app.loan_doo_user_group"/>
+                <button name="dof_approve" type="object" states="dof" string="DOF Approve"
+                        class="oe_highlight"
+                        groups="loan_work_flow_app.loan_dof_user_group"/>
+                <button name="ceo_approve" type="object" states="ceo" string="CEO Approve"
+                        class="oe_highlight"
+                        groups="loan_work_flow_app.loan_ceo_user_group"/>
+                <button name="print_pdf" type="object" states="done,approve,waiting_approval_1" string="Print"
+                        class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//field[@name='installment']" position="after">
+                <field name="loan_description"/>
+
+            </xpath>
+            <xpath expr="//sheet" position="after">
+                <!-- Add your fields or attributes here -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

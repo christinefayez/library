@@ -1,0 +1,15 @@
+<odoo>
+
+    <record id="crm_lost_reason_view_tree_inherit" model="ir.ui.view">
+        <field name="name">crm.lost.reason.tree.inherit</field>
+        <field name="model">crm.lost.reason</field>
+        <field name="inherit_id" ref="crm.crm_lost_reason_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="is_competitor_reason" widget="boolean_toggle"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

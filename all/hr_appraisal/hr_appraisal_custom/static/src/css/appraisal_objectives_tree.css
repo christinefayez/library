@@ -1,0 +1,26 @@
+.objectives_tree [data-name="title"] {
+    width: 200px !important;
+}
+
+.objectives_tree [data-name="weight"] {
+    width: 60px !important;
+}
+
+.objectives_tree [data-name="description"] {
+    width: 200px !important;
+}
+.competencies_tree [data-name="title"] {
+    width: 200px !important;
+}
+
+.competencies_tree [data-name="weight"] {
+    width: 60px !important;
+}
+
+.competencies_tree [data-name="description"] {
+    width: 200px !important;
+}
+
+.o_form_view .o_form_statusbar > .o_statusbar_status {
+    margin-right: auto;
+}

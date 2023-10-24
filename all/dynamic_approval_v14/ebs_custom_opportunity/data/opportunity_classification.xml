@@ -1,0 +1,17 @@
+<odoo noupdate="1">
+
+    <record id="data_opportunity_classification_is_lpo" model="opportunity.classification">
+        <field name="name">LPO</field>
+    </record>
+
+    <record id="data_opportunity_classification_is_tender" model="opportunity.classification">
+        <field name="name">Tender</field>
+        <field name="is_tender">True</field>
+    </record>
+
+    <record id="data_opportunity_classification_rfq" model="opportunity.classification">
+        <field name="name">RFQ</field>
+    </record>
+
+
+</odoo>

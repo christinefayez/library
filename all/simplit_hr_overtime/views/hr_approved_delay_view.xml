@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+		<record id="hr_approved_delay_tree" model="ir.ui.view">
+			<field name="name">hr.approved.delay.tree</field>
+			<field name="model">hr.approved.delay</field>
+			<field name="arch" type="xml">
+				<tree string="Approved Delayed Records">
+					<field name="employee_id"/>
+					<field name="manager_id"/>
+					<field name="approval_user"/>
+					<field name="start_date"/>
+					<field name="end_date"/>
+					<field name="total_actual_hours" string="Total Delayed Hours" widget="float_time"/>
+					<field name="total_approved_hours" string="Approved Delayed Hours" widget="float_time"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		 </record>
+
+
+		<record id="hr_approved_delay_form" model="ir.ui.view">
+			<field name="name">hr.approved.delay.form</field>
+			<field name="model">hr.approved.delay</field>
+			<field name="arch" type="xml">
+				<form string="Approved Delays">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="manager_id"/>
+                                <field name="approval_user"/>
+								<field name="start_date"/>
+                                <field name="end_date"/>
+                            </group>
+                            <group>
+                                <field name="total_actual_hours" widget="float_time"/>
+								<field name="total_approved_hours" widget="float_time"/>
+								<field name="approval_date"/>
+								<field name="state"/>
+                            </group>
+                        </group>
+                    </sheet>
+			   </form>
+			</field>
+		</record>
+		<record id="hr_approved_delay_search" model="ir.ui.view">
+			<field name="name">hr.approved.delay.search</field>
+			<field name="model">hr.approved.delay</field>
+			<field name="arch" type="xml">
+				<search string="Approved Delays">
+					<field name="employee_id"/>
+					<field name="manager_id"/>
+					<field name="start_date"/>
+					<separator/>
+					 <group expand="1" string="Group By">
+						<filter string="Employee" name="employee_id" context="{'group_by':'employee_id'}"/>
+						<filter string="Manager" name="manager_id" context="{'group_by':'manager_id'}"/>
+						<filter string="Date" name="start_date" context="{'group_by':'start_date'}"/>
+						 <filter string="State" name="state" context="{'group_by':'state'}"/>
+					 </group>
+				</search>
+			</field>
+		</record>
+		<record id="hr_approved_delay_action" model="ir.actions.act_window">
+			<field name="name">Approved Delay Action</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.approved.delay</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_approved_delay_search"/>
+		</record>
+
+		<menuitem id="menu_action_hr_approved_delay" name="Approved Delays"
+			parent="hr_attendance.menu_hr_attendance_my_attendances" action="hr_approved_delay_action"/>
+
+    </data>
+</odoo>

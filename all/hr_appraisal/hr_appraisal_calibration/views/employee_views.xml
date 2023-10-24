@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="view_employee_appraisal_history_form" model="ir.ui.view">
+            <field name="name">hr.employee.appraisal.history.form.</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_document_custom.view_employee_form_custom"/>
+            <field name="arch" type="xml">
+
+                <page name="document_page" position="after">
+                    <page name="document_page" string="Appraisal History">
+                        <field name="performance_history">
+                            <tree editable="0" create="0" delete="0">
+                                <field name="appraisal_employee" readonly="1"/>
+                                <field name="appraisal_year_related" readonly="1"/>
+                                <field name="hr_overall_rating_final_related" readonly="1"/>
+                                <field name="pip_final_decision" readonly="1"/>
+                                <field name="appraisal_form_related" readonly="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

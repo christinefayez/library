@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+		<record id="hr_approved_overtime_tree" model="ir.ui.view">
+			<field name="name">hr.approved.overtime.tree</field>
+			<field name="model">hr.approved.overtime</field>
+			<field name="arch" type="xml">
+				<tree string="Approved overtimeed Records">
+					<field name="employee_id"/>
+					<field name="manager_id"/>
+					<field name="approval_user"/>
+					<field name="start_date"/>
+					<field name="end_date"/>
+					<field name="total_actual_hours" string="Total overtimeed Hours" widget="float_time"/>
+					<field name="total_approved_hours" string="Approved overtimeed Hours" widget="float_time"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		 </record>
+
+
+		<record id="hr_approved_overtime_form" model="ir.ui.view">
+			<field name="name">hr.approved.overtime.form</field>
+			<field name="model">hr.approved.overtime</field>
+			<field name="arch" type="xml">
+				<form string="Approved overtimes">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="manager_id"/>
+                                <field name="approval_user"/>
+								<field name="start_date"/>
+                                <field name="end_date"/>
+                            </group>
+                            <group>
+                                <field name="total_actual_hours" widget="float_time"/>
+								<field name="total_approved_hours" widget="float_time"/>
+								<field name="approval_date"/>
+								<field name="state"/>
+                            </group>
+                        </group>
+                    </sheet>
+			   </form>
+			</field>
+		</record>
+		<record id="hr_approved_overtime_search" model="ir.ui.view">
+			<field name="name">hr.approved.overtime.search</field>
+			<field name="model">hr.approved.overtime</field>
+			<field name="arch" type="xml">
+				<search string="Approved overtimes">
+					<field name="employee_id"/>
+					<field name="manager_id"/>
+					<field name="start_date"/>
+					<separator/>
+					 <group expand="1" string="Group By">
+						<filter string="Employee" name="employee_id" context="{'group_by':'employee_id'}"/>
+						<filter string="Manager" name="manager_id" context="{'group_by':'manager_id'}"/>
+						<filter string="Date" name="start_date" context="{'group_by':'start_date'}"/>
+						 <filter string="State" name="state" context="{'group_by':'state'}"/>
+					 </group>
+				</search>
+			</field>
+		</record>
+		<record id="hr_approved_overtime_action" model="ir.actions.act_window">
+			<field name="name">Approved overtime Action</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.approved.overtime</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_approved_overtime_search"/>
+		</record>
+
+		<menuitem id="menu_action_hr_approved_overtime" name="Approved overtimes"
+			parent="hr_attendance.menu_hr_attendance_my_attendances" action="hr_approved_overtime_action"/>
+
+    </data>
+</odoo>

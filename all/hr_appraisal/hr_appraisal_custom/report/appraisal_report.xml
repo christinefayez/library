@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <report
+                id="appraisal_report_id"
+                model="hr.appraisal"
+                string="Appraisal"
+                report_type="qweb-pdf"
+                name="hr_appraisal_custom.appraisal_report"
+                file="hr_appraisal_custom.appraisal_report"
+                print_report_name="object.sudo().employee_id.name"
+                attachment="' Appraisal - '+(object.sudo().employee_id.name if object.sudo().employee_id.name else '')+'.pdf'"
+                />
+<!--                groups="security_rules.group_strata_hc"-->
+
+
+
+        <template id="appraisal_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="hr_appraisal_custom.appraisal_report_document"/>
+                </t>
+            </t>
+        </template>
+
+
+        <template id="appraisal_report_document">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o"/>
+                <div class="page">
+                    <div class="text-center" id="title">
+                        <h2>
+                            <span>Appraisal</span> (<span t-field="o.related_period.name"/>)
+                            <br/>
+                            <span t-field="o.stage_id.name"/>
+                        </h2>
+                    </div>
+                    <div class=" row clearfix m32">
+                        <table class="table table-bordered" style="table-layout: fixed;" name="desc_line_table">
+                            <tbody class="desc_tbody">
+                                <tr>
+                                    <td class="font-weight-bold">
+                                        <span>Employee</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.employee_id.name"/>
+                                    </td>
+                                    <td class="font-weight-bold">
+                                        <span>Current Manager</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.current_manager.name"/>
+                                    </td>
+                                    <td class="font-weight-bold">
+                                        <span>Appraisal Manager</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.appraisal_manager.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">
+                                        <span>Employee Grade</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.employee_grade"/>
+                                    </td>
+                                    <td class="font-weight-bold">
+                                        <span>System ID</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.employee_system_id"/>
+                                    </td>
+<!--                                    <td class="font-weight-bold">-->
+<!--                                        <span>Strata ID</span>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span t-field="o.employee_strata_id"/>-->
+<!--                                    </td>-->
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">
+                                        <span>Job Title</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.employee_job_title"/>
+                                    </td>
+                                    <td class="font-weight-bold">
+                                        <span>Form</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.appraisal_form.name"/>
+                                    </td>
+                                    <td class="font-weight-bold">
+                                        <span>Appraisal Deadline</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.date_close"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">
+                                        <span>Department</span>
+                                    </td>
+                                    <td colspan="5">
+                                        <span t-field="o.department_id.display_name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">
+                                        <span>Employee Comment</span>
+                                    </td>
+                                    <td colspan="5">
+                                        <span t-field="o.employee_comment"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">
+                                        <span>Manager Comment</span>
+                                    </td>
+                                    <td colspan="5">
+                                        <span t-field="o.manager_comment"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">
+                                        <span>HR Comment</span>
+                                    </td>
+                                    <td colspan="5">
+                                        <span t-field="o.hr_comment"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class=" row clearfix m32 mt-3">
+                        <div class="col-12">
+                            <h4>
+                                <span>Objectives</span>
+                            </h4>
+                            Total Weight Sum:
+                            <span t-field="o.sudo().total_sum_weight"/>
+                            <br/>
+                            Total Count Objectives:
+                            <span t-field="o.sudo().total_count_objectives"/>
+                            <table class="table" style="table-layout: fixed;">
+                                <tbody class="desc_tbody">
+                                    <t t-foreach="o._get_objectives()"
+                                       t-as="row">
+
+                                        <t t-if="not row['bold']">
+                                            <tr>
+                                                <td>
+                                                    <span style="font-weight:bold">Objective</span>
+                                                </td>
+                                                <td colspan="5">
+                                                    <span t-esc="row['name']"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style="font-weight:bold">Description</span>
+                                                </td>
+                                                <td colspan="5">
+                                                    <span t-esc="row['description']"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="font-weight-bold">
+                                                <td>
+                                                    <span>Weight</span>
+                                                </td>
+                                                <td>
+                                                    <span>Employee Rating</span>
+                                                </td>
+                                                <td>
+                                                    <span>Employee Comment</span>
+                                                </td>
+                                                <td>
+                                                    <span>Manager Rating</span>
+                                                </td>
+                                                <td>
+                                                    <span>Manager Comment</span>
+                                                </td>
+                                                <td>
+                                                    <span>HR Comment</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span t-esc="row['weight']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['e_rating']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['e_comment']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['m_rating']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['m_comment']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['h_comment']"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6"></td>
+                                            </tr>
+                                        </t>
+<!--                                        <t t-if="row['bold']">-->
+<!--                                            <tr class="font-weight-bold">-->
+<!--                                                <td>-->
+<!--                                                    <span t-esc="row['weight']"/>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <span t-esc="row['e_rating']"/>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <span t-esc="row['e_comment']"/>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <span t-esc="row['m_rating']"/>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <span t-esc="row['m_comment']"/>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <span t-esc="row['h_comment']"/>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                        </t>-->
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <br/>
+
+                    <div class=" row clearfix m32 mt-3">
+                        <div class="col-12">
+                            <h4>
+                                <span>Trainings</span>
+                            </h4>
+                            <table class="table" style="table-layout: fixed;">
+                                <tbody class="desc_tbody">
+                                    <t t-foreach="o.sudo()._get_trainings()"
+                                       t-as="row">
+                                        <t t-if="row['bold']">
+                                            <tr class="font-weight-bold">
+                                                <td>
+                                                    <span t-esc="row['name']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['status']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['from_date']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['to_date']"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="not row['bold']">
+                                            <tr>
+                                                <td>
+                                                    <span style="font-weight:bold">Description</span>
+                                                </td>
+                                                <td colspan="3">
+                                                    <span t-esc="row['description']"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span t-esc="row['name']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['status']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['from_date']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['to_date']"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4"></td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <br/>
+
+                    <div class=" row clearfix m32 mt-3">
+                        <div class="col-12">
+                            <h4>
+                                <span>Feedbacks</span>
+                            </h4>
+                            <table class="table" style="table-layout: fixed;">
+                                <tbody class="desc_tbody">
+                                    <t t-foreach="o.sudo()._get_feedbacks()"
+                                       t-as="row">
+                                        <t t-if="row['bold']">
+                                            <tr class="font-weight-bold">
+                                                <td>
+                                                    <span t-esc="row['name']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['user']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['type']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['feedback']"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="not row['bold']">
+                                            <tr>
+                                                <td>
+                                                    <span t-esc="row['name']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['user']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['type']"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="row['feedback']"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

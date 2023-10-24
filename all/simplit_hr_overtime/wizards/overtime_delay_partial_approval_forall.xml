@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="overtime_delay_approval_wizard" model="ir.ui.view">
+            <field name="name">Overtime Delay wizard</field>
+            <field name="model">overtime.delay.partial.approval.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+               <form>
+                   <sheet>
+                        <group>
+                           <field name="employee_id"/>
+                           <field name="actual_total_hours"/>
+                            <field name="approved_hours"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                       <group>
+                           <field name="show_lines"/>
+                           <field name="overtime_or_delay" invisible="1"/>
+                           <field name="overtime_ids" attrs="{'invisible':['|',('overtime_or_delay', '=',True),('show_lines','=',False)]}"/>
+                           <field name="delay_ids"  attrs="{'invisible':['|',('overtime_or_delay', '=',False),('show_lines','=',False)]}"/>
+                       </group>
+                   </sheet>
+                   <footer>
+                        <button type="object" class="oe_highlight" name="update_approved_hours" string="Update" />
+                       or
+                        <button type="object" class="oe_highlight" string="Cancel" name="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+		<record id="overtime_delay_approval_wizard_action" model="ir.actions.act_window">
+            <field name="name">Approval Wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">overtime.delay.partial.approval.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

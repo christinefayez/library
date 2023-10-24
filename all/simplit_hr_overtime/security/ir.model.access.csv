@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_simplit_hr_overtime,simplit.hr.overtime,model_simplit_hr_overtime,hr.group_hr_user,1,1,1,1
+access_simplit_hr_overtime1,simplit.hr.overtime1,model_simplit_hr_overtime,base.group_user,1,1,1,1
+access_simplit_hr_delay,simplit.hr.delay,model_simplit_hr_delay,hr.group_hr_user,1,1,1,1
+access_res_company,res.company,model_res_company,hr.group_hr_user,1,1,1,1
+access_res_config_settings,res.config.settings,model_res_config_settings,hr.group_hr_user,1,1,1,1
+access_hr_worklocation,hr.worklocation,model_hr_worklocation,hr.group_hr_user,1,1,1,1
+access_week_off,week_off,model_week_off,hr.group_hr_user,1,1,1,1
+access_simplit_delay_approval,simplit_delay_approval,model_simplit_delay_approval,hr.group_hr_user,1,1,1,1
+access_overtime_delay_partial_approval,overtime.delay.partial.approval.wizard,model_overtime_delay_partial_approval_wizard,hr.group_hr_user,1,1,1,1
+access_hr_approved_overtime,hr.approved.overtime,model_hr_approved_overtime,hr.group_hr_user,1,1,1,1
+access_hr_approved_delay,hr.approved.delay,model_hr_approved_delay,hr.group_hr_user,1,1,1,1
+
+

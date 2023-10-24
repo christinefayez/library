@@ -1,0 +1,60 @@
+<odoo>
+    <record id="hr_hours_ratio_tree" model="ir.ui.view">
+        <field name="name">hr.hours.ratio_tree</field>
+        <field name="model">hr.hours.ratio</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="hours_type"/>
+                <field name="day_type"/>
+                <!-- <field name="day_period"/> -->
+                <field name="time_frame"/>
+                <field name="hour_ratio"/>
+                <field name="assign_type"/>
+                <field name="department_ids" widget="many2many_tags"/>
+                <field name="employee_ids" widget="many2many_tags"/>
+                <field name="grade_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_hours_ratio_form" model="ir.ui.view">
+        <field name="name">hr.hours.ratio_form</field>
+        <field name="model">hr.hours.ratio</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="hours_type"/>
+                            <field name="day_type"/>
+                            <!-- <field name="day_period"/> -->
+                            <field name="time_frame"
+                                   attrs="{'invisible':[('day_type','!=','working day')], 'required':[('day_type','=','working day')]}"/>
+                            <field name="hour_ratio"/>
+                        </group>
+                        <group>
+                            <field name="assign_type" widget="radio"/>
+                            <field name="department_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('assign_type','!=','departments')]}"/>
+                            <field name="employee_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('assign_type','!=','employees')]}"/>
+                            <field name="grade_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('assign_type','!=','grades')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_hours_ratio_window" model="ir.actions.act_window">
+        <field name="name">Hour Ratio</field>
+        <field name="res_model">hr.hours.ratio</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="hr_hours_ratio_window_menu" name="Hour Ratio" sequence="1"
+              action="hr_hours_ratio_window" parent="hr_payroll.menu_hr_salary_configuration"/>
+</odoo>

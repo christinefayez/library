@@ -1,0 +1,17 @@
+<odoo>
+
+    <record id="private_customer_type" model="res.partner.type">
+        <field name="name">Private</field>
+        <field name="type">customer</field>
+        <field name="active" eval="True"/>
+        <field name="appear_license" eval="True"/>
+    </record>
+
+    <record id="government_customer_type" model="res.partner.type">
+        <field name="name">Government</field>
+        <field name="type">customer</field>
+        <field name="active" eval="True"/>
+        <field name="appear_license" eval="False"/>
+    </record>
+
+</odoo>

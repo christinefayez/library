@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="simplit_attendance_integration_tree" model="ir.ui.view">
+			<field name="name">simplit.attendance.integration.tree</field>
+			<field name="model">simplit.attendance.integration</field>
+			<field name="arch" type="xml">
+
+                <tree string="Records For Payroll">
+                    <field name="employee_id"/>
+					<field name="overtime"/>
+					<field name="overtime_rate"/>
+                    <field name="delaytime"/>
+					<field name="delay_rate"/>
+					<field name="paid_leaves"/>
+                    <field name="lwp"/>
+					<field name="total_worked_days"/>
+					<field name="total_worked_hours"/>
+					<field name="half_day_leaves"/>
+                </tree>
+
+            </field>
+        </record>
+
+         <record id="simplit_attendance_integration_form" model="ir.ui.view">
+			<field name="name">simplit.attendance.integration.form</field>
+			<field name="model">simplit.attendance.integration</field>
+			<field name="arch" type="xml">
+                <form string="Payroll records">
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                           <label for="from_date" string="Period"/>
+                            <div>
+                                <field name="from_date" class="oe_inline"/> - <field name="to_date" class="oe_inline"/>
+                            </div>
+                            <field name="overtime"/>
+                            <field name="overtime_rate"/>
+                            <field name="delaytime"/>
+                            <field name="delay_rate"/>
+                        </group>
+                        <group>
+                            <field name="paid_leaves"/>
+                            <field name="lwp"/>
+                            <field name="total_worked_days"/>
+                            <field name="total_worked_hours"/>
+                            <field name="half_day_leaves"/>
+                        </group>
+                    </group>
+                </form>
+
+            </field>
+         </record>
+
+        <record id="action_simplit_attendance_integration" model="ir.actions.act_window">
+			<field name="name">Attendance Integration</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">simplit.attendance.integration</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+        <menuitem id="menu_action_simplit_attendance_integration"
+                  name="Attendance Integration"
+                  parent="hr_attendance.menu_hr_attendance_root"
+				  action="action_simplit_attendance_integration"/>
+
+
+    </data>
+</odoo>

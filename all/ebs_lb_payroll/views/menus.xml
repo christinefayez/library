@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <menuitem id="additional_element_menu" name="Additional Elements" sequence="80" action="additional_element_window"
+              parent="hr_payroll.menu_hr_salary_configuration"/>
+
+    <menuitem id="additional_elements_types_menu" name="Additional Elements Types" sequence="70"
+              action="additional_elements_types_window" parent="hr_payroll.menu_hr_salary_configuration"/>
+
+    <!-- <menuitem id="additional_elements_types_menu" name="Additional Elements Types" sequence="70"
+              action="additional_elements_types_window" parent="hr_payroll.menu_hr_salary_configuration"/> -->
+
+</odoo>

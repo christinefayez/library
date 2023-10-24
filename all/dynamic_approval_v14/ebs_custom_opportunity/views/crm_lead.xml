@@ -1,0 +1,517 @@
+<odoo>
+
+
+    <record id="crm_lead_view_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref='crm.crm_lead_view_form'/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_deadline']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="team_id" position="move"/>
+            </xpath>
+            <xpath expr="//field[@name='date_deadline']" position="before">
+                <field name="user_id" position="move"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="primary_supplier" string="Primary Supplier" options="{'no_open': True, 'no_create': True}"
+                       attrs="{'required':[('visible_customize_fields','=',True)], 'readonly':[('is_has_non_draft_order', '=',True)]}"/>
+                <field name="vertical_id" widget="selection" options="{'no_create': True}"
+                       attrs="{'required':[('visible_customize_fields','=',True)], 'readonly':[('is_has_non_draft_order', '=',True)]}"/>
+
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="attrs">{'required': [('visible_customize_fields', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                <attribute name="options">{'currency_field': 'amount_currency'}</attribute>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']" position="inside">
+                <field name="margin_percentage" string="GP%" required="1"/>
+                <field name="create_date" attrs="{'invisible': [('create_date','=',False)]}"/>
+                <field name="create_uid"/>
+                <field name="write_date" string="Modified date" attrs="{'invisible': [('write_date','=',False)]}"/>
+                <field name="write_uid" string="Modified by" attrs="{'invisible': [('write_uid','=',False)]}"/>
+                <field name="product_classification" widget="many2many_tags" options="{'no_create':true}"/>
+                <field name="parent_opportunity" options="{'no_open':true,'no_create':true}"/>
+
+                <field name="expected_award_date" string="Expected Award Date"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)], 'required': [('visible_customize_fields','=',True)]}"/>
+                <field name="expected_delivery_date" string="Expected Delivery Date"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)], 'required': [('visible_customize_fields','=',True)]}"/>
+                <field name="expected_installation_date"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)]}"/>
+                <field name="expected_invoice_date" attrs="{'invisible':[('visible_customize_fields','=',False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="ond_number"
+                       attrs="{'invisible':['|',('visible_customize_fields','=',False),('ond_number','=',False)]}"
+                       readonly="1"/>
+                <field name="lpo_number"
+                       attrs="{'invisible':['|',('visible_customize_fields','=',False),('lpo_number','=',False)]}"
+                       readonly="1"/>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]/field[@name='partner_name']" position="after">
+                <field name="customer_status" readonly="1" string="Customer Status"/>
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="after">
+                <field name="is_won" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="required">1</attribute>
+                <attribute name="force_save">1</attribute>
+                <attribute name="attrs">{'readonly': [('is_has_non_draft_order', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="lead_type_id" options="{'no_create': True, 'no_open': True}"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)],'required':[('visible_customize_fields','=',True)], 'readonly':[('is_has_non_draft_order', '=',True)]}"/>
+                <field name="opportunity_classification_id" string="Opportunity Classification"
+                       attrs="{'required':[('visible_customize_fields','=',True)], 'readonly':[('is_has_non_draft_order', '=',True)]}"
+                       options="{'no_create': True, 'no_open': True}"/>
+                <field name="region" widget="selection" required="1" string='Region' force_save="1" readonly="1"/>
+                <field name="forecast_category_ids" invisible="1"/>
+                <field name="appear_risk" invisible="1"/>
+                <field name="forecast_category_id" string='Forecast Category' required="1" widget="selection"
+                       domain="[('id','in',forecast_category_ids)]"/>
+                <field name="date_closed" string="Close Date"
+                       attrs="{'invisible':[('is_won','!=',True)]}"/>
+                <field name="on_hold" widget="boolean_toggle"/>
+                <field name="is_mwb" string="MWB" widget="boolean_toggle"
+                       attrs="{'invisible':[('visible_ehs_only_customize_fields','=',False)]}"/>
+                <field name="is_split" string="Split" widget="boolean_toggle"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)],'readonly':[('is_has_non_draft_order', '=',True)]}"/>
+                <field name="contract" invisible="1"/>
+                <field name="contract_ref" attrs="{'invisible':[('contract','=',False)]}"/>
+
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="attrs">{'invisible': [('visible_customize_fields', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']" position="after">
+                <field name="visible_customize_fields" invisible="1"/>
+                <field name="visible_ehs_only_customize_fields" invisible="1"/>
+                <field name="is_has_non_draft_order" invisible="1"/>
+                <field name="opp_classification_is_tender" invisible="1"/>
+                <page name="cost_revenue" string="Deal Sharing"
+                      attrs="{'invisible':[('visible_customize_fields','=',False)]}">
+                    <field name="cost_revenue_ids" force_save="1"
+                           attrs="{'readonly':['|',('is_split','=',False), ('is_has_non_draft_order', '=',True)]}"
+                           context="{'default_account_analytic_tag_id':vertical_id}">
+                        <tree editable="bottom">
+                            <button type="object" name="action_open_form_edit" icon="fa-edit"
+                                    attrs="{'invisible':['|',('parent.is_split','=',True), ('parent.is_has_non_draft_order', '=',True)]}"/>
+                            <field name="is_added_automatically" invisible="1"/>
+                            <field name="account_analytic_tag_id" string="Vertical"
+                                   attrs="{'readonly': [('is_added_automatically', '=', True)]}" force_save="1"/>
+                            <field name="expected_revenue" force_save="1"/>
+                            <field name="expected_cost" force_save="1"/>
+                            <field name="profit_margin_amount"/>
+                            <field name="profit_margin_percentage" widget="progressbar"/>
+                            <field name="salesperson" required="1"
+                                   attrs="{'readonly': [('is_added_automatically', '=', True)]}" force_save="1"/>
+                        </tree>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="account_analytic_tag_id" force_save="1" string="Vertical"
+                                           widget="selection"
+                                           attrs="{'readonly': [('parent.is_split', '=', False)]}"/>
+                                    <field name="expected_revenue"/>
+                                    <field name="expected_cost"/>
+                                </group>
+                                <group>
+                                    <field name="profit_margin_amount"/>
+                                    <field name="profit_margin_percentage" widget="progressbar"/>
+                                    <field name="salesperson" required="1" force_save="1"
+                                           attrs="{'readonly': [('parent.is_split', '=', False)]}"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+                <page name="tender_details" string="Tender"
+                      attrs="{'invisible':['|',('opp_classification_is_tender','=', False),('visible_ehs_only_customize_fields','=', False)]}">
+                    <group>
+                        <group name="bid_bond" string="Bid Bond">
+                            <field name="is_bid_bond_required" widget="boolean_toggle" string="Bid Bond Required"/>
+                            <field name="is_bid_bond_bank_letter_required"
+                                   attrs="{'invisible':[('is_bid_bond_required','=', False)]}" widget="boolean_toggle"/>
+                            <field name="is_performance_bond_required"
+                                   attrs="{'invisible':[('is_bid_bond_required','=', False)]}"
+                                   widget="boolean_toggle"/>
+                            <field name="activity"/>
+                        </group>
+                        <group name="tender_criteria" string="Tender Criteria">
+                            <field name="tender_criteria_percentage"/>
+                            <field name="tender_submission_deadline" string="Tender submission deadline date"/>
+                            <field name="tender_description" string="Tender Description"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="bond_details" string="Bond Details"
+                               attrs="{'invisible':[('is_bid_bond_required','=', False)]}">
+                            <field name="bid_bond_expr_date"/>
+                            <field name="bond_bank_letter_attachment_ids" widget="many2many_binary"
+                                   attrs="{'invisible':[('is_bid_bond_bank_letter_required','=', False)]}"/>
+                            <field name="bid_bond_number"/>
+                        </group>
+                        <group name="performance_bond" string="Performance Bond"
+                               attrs="{'invisible':[('is_performance_bond_required','=', False)]}">
+                            <field name="performance_bond_expiry_date"/>
+                            <field name="performance_bond_bank_letter" widget="many2many_binary"/>
+                            <field name="performance_bond_number"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="tender_details" string="Tender"
+                      attrs="{'invisible':['|',('opp_classification_is_tender','=', False),('visible_ehs_only_customize_fields','=', True)]}">
+                    <group>
+                        <group name="bid_bond" string="Bid Bond">
+                            <field name="is_performance_bond_required" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <group attrs="{'invisible':[('is_performance_bond_required','=', False)]}">
+                        <group name="performance_bond" string="Performance Bond">
+                            <field name="performance_bond_expiry_date"/>
+                            <field name="performance_bond_bank_letter" widget="many2many_binary"/>
+                            <field name="performance_bond_number"/>
+                        </group>
+                    </group>
+                </page>
+                <field name="is_risk_val" invisible="1"/>
+                <page name="risk" string="Risk"
+                      attrs="{'invisible':['|',('visible_customize_fields','=',False),('is_risk_val','=',False)]}">
+                    <group name="risk_container">
+                        <group name="tender_details" string="Risk Details">
+                            <field name="tender_type" string="Risk Type or Upside Type"/>
+                            <field name="levels_of_forecast_category" attrs="{'invisible':[('forecast_category_id','=',False)],
+                                                                'required':[('appear_risk','=',True),('is_risk_val','=',True)]}"/>
+                            <field name="risk_percentage"
+                                   attrs="{'invisible':[('tender_type','=','upside')],'readonly':[('appear_risk','=',False)]}"
+                                   string="Percentage %"/>
+                            <field name="upside_percentage"
+                                   attrs="{'invisible':[('tender_type','=','risk')],'readonly':[('appear_risk','=',False)]}"
+                                   string="Percentage %"/>
+                            <field name="risk_amount" string="Risk Amount"
+                                   attrs="{'invisible':[('tender_type','=','upside')]}"/>
+                            <field name="upside_amount" string="Upside Amount"
+                                   attrs="{'invisible':[('tender_type','=','risk')]}"/>
+                            <field name="risk_gross_margin" string="Risk Gross Margin"
+                                   attrs="{'invisible':[('tender_type','=','upside')]}"/>
+                            <field name="upside_gross_margin" string="Upside Gross Margin"
+                                   attrs="{'invisible':[('tender_type','=','risk')]}"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="pricing_strategy" string="Pricing Strategy"
+                      attrs="{'invisible':[('opp_classification_is_tender','=', False)]}">
+                    <group>
+                        <group name="notes" string="Strategy Notes">
+                            <field name="bid_rationale" placeholder="what is our critical success factor ?"
+                                   attrs="{'required':[('expected_revenue','>',5000000),('opp_classification_is_tender','=',True)]}"/>
+                            <field name="pricing_strategy"
+                                   placeholder="How have we priced the deal considering our value proposition and competition?"
+                                   attrs="{'required':[('expected_revenue','>',5000000),('opp_classification_is_tender','=',True)]}"/>
+                            <field name="competitor_analysis"
+                                   attrs="{'required':[('expected_revenue','>',5000000),('opp_classification_is_tender','=',True)]}"/>
+                            <field name="key_assumptions"
+                                   attrs="{'required':[('expected_revenue','>',5000000),('opp_classification_is_tender','=',True)]}"/>
+                            <field name="tender_executive_summary"
+                                   attrs="{'required':[('expected_revenue','>',5000000),('opp_classification_is_tender','=',True)]}"/>
+                        </group>
+                        <group name="details" string="Strategy Details">
+                            <field name="delivery_model"
+                                   attrs="{'required':[('expected_revenue','>',5000000),('opp_classification_is_tender','=',True)]}"/>
+                            <field name="risk_assessment"
+                                   attrs="{'required':[('expected_revenue','>',5000000),('opp_classification_is_tender','=',True)]}"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='lost_reason']" position="after">
+                <field name="is_competitor_reason" invisible="1"/>
+                <field name="lost_competitor_id"
+                       attrs="{'invisible':['|',('active','=',True),('is_competitor_reason','=', False)], 'required':[('is_competitor_reason','=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='lost_reason']" position="attributes">
+                <attribute name="attrs">{'required': [('active', '=', False)], 'invisible': [('active', '=',
+                    True)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <div>
+                    <h2>
+                        <field name="opportunity_sequence" readonly="1"/>
+                    </h2>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <group>
+                    <group>
+                        <h2 class="o_row no-gutters align-items-end">
+                            <div class="col" attrs="{'invisible': [('type', '=', 'lead')]}">
+                                <label for="total_cost"
+                                       attrs="{'invisible':[('visible_customize_fields','=', False)]}"/>
+                                <div class="o_row">
+                                    <field name="amount_currency" invisible="1"/>
+                                    <field name="total_cost" class="oe_inline" widget='monetary'
+                                           options="{'currency_field': 'amount_currency'}"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="col" attrs="{'invisible': [('type', '=', 'lead')]}">
+                                <label for="total_profit_margin"
+                                       attrs="{'invisible':[('visible_customize_fields','=', False)]}"/>
+                                <div class="o_row">
+                                    <field name="amount_currency" invisible="1"/>
+                                    <field name="total_profit_margin" class="oe_inline" widget='monetary'
+                                           options="{'currency_field': 'amount_currency'}"/>
+                                </div>
+                            </div>
+                        </h2>
+                    </group>
+                    <group>
+                        <h2 class="o_row no-gutters align-items-end">
+                            <div class="col" attrs="{'invisible': [('type', '=', 'lead')]}">
+                                <label for="opportunity_value"
+                                       attrs="{'invisible':[('visible_customize_fields','=', False)]}"/>
+                                <div class="o_row">
+                                    <field name="company_currency" invisible="1"/>
+                                    <field name="opportunity_value" class="oe_inline" widget='monetary'
+                                           options="{'currency_field': 'company_currency'}"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="col" invisible="1">
+                                <label for="amount_currency"
+                                       attrs="{'invisible':[('visible_customize_fields','=', False)]}"/>
+                                <field name="amount_currency"/>
+                            </div>
+                        </h2>
+                    </group>
+                </group>
+
+            </xpath>
+            <button name="action_schedule_meeting" position="after">
+                <button class="oe_stat_button" type="object" name="action_open_child_leads" icon="fa-cubes"
+                        attrs="{'invisible': [('child_count', '=', 0)]}">
+                    <field name="child_count" widget="statinfo" string="Opportunties"/>
+                </button>
+            </button>
+            <field name="priority" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <xpath expr="//page[@name='lead']/group/group[2]/field[@name='function']" position="after">
+                <field name="phone_contact_person" string="Landline" readonly="1" force_save="1"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)]}"/>
+                <field name="mobile_contact_person" string="Mobile" readonly="1" force_save="1"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)]}"/>
+                <field name="email_contact_person" string="Email" readonly="1" force_save="1"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)]}"/>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group/group[1]/field[@name='website']" position="after">
+                <field name="phone" force_save="1" readonly="1"/>
+                <field name="mobile" readonly="1" force_save="1"/>
+                <field name="email_from" readonly="1" force_save="1"/>
+                <field name="partner_contact_owner_id" readonly="1"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)]}"/>
+                <field name="partner_trade_license_number" readonly="1"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)]}"/>
+                <field name="partner_license_expire_date" readonly="1"
+                       attrs="{'invisible':[('visible_customize_fields','=',False)]}"/>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]" position="attributes">
+                <attribute name="string">Company Information</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]/field[@name='partner_name']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+                <attribute name="string">Customer Name</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[2]" position="attributes">
+                <attribute name="string">Contact Information</attribute>
+            </xpath>
+            <xpath expr="//label[@for='contact_name_page_lead']" position="before">
+                <field name="contact_person_id" string="Contact Person" domain="[('parent_id','=',partner_id)]"
+                       context="{'default_parent_company_id': partner_id,'default_type': 'contact', 'form_view_ref': 'ebs_custom_opportunity.res_partner_contact_form'}"/>
+            </xpath>
+            <xpath expr="//label[@for='contact_name_page_lead']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@id='contact_name_page_lead']/.." position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[2]/div[1]/field[@name='contact_name']"
+                   position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[2]/div[1]/field[@name='title']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[2]/field[@name='function']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[2]/div[2]/field[@name='mobile']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]/div[1]/field[@name='street']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]/div[1]/field[@name='street2']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]/div[1]/field[@name='city']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]/div[1]/field[@name='state_id']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]/div[1]/field[@name='zip']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]/div[1]/field[@name='country_id']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]/field[@name='website']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group[1]/group[1]/field[@name='lang_id']" position="attributes">
+                <attribute name="force_save">True</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']/label[@for='email_from']" position="replace"/>
+            <xpath expr="//label[@for='mobile_page_lead']" position="replace"/>
+            <xpath expr="//field[@id='mobile_page_lead']/.." position="replace"/>
+            <xpath expr="//group[@name='opportunity_partner']/div/button[@name='mail_action_blacklist_remove']/.."
+                   position="replace"/>
+            <xpath expr="//group[@name='opportunity_partner']/label[@for='phone']" position="replace"/>
+            <xpath expr="//group[@name='opportunity_partner']/div/button[@name='phone_action_blacklist_remove']/.."
+                   position="replace"/>
+            <page name="lead" position="attributes">
+                <attribute name="string">Customer Information</attribute>
+            </page>
+            <xpath expr="//div[hasclass('oe_title')]/h2/div/div/span[2]" position="attributes">
+                <attribute name="attrs">{'invisible': [('visible_customize_fields', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//label[@for='probability']/.." position="attributes">
+                <attribute name="attrs">{'invisible': [('visible_customize_fields', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//div[@id='probability']" position="attributes">
+                <attribute name="attrs">{'invisible': [('visible_customize_fields', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">
+        <field name="name">crm.case.kanban.view.leads.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="quick_create">false</attribute>
+            </xpath>
+            <xpath expr="//kanban" position="inside">
+                <field name="forecast_category_id"/>
+                <field name="lead_type_id"/>
+                <field name="company_id"/>
+                <field name="vertical_id"/>
+                <field name="date_deadline" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <div>
+                    <field name="lead_type_id"/>
+                </div>
+                <div>
+                    <field name="forecast_category_id"/>
+                </div>
+                <div>
+                    <field name="vertical_id"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='activity_ids' and @widget='kanban_activity']" position="after">
+                <div name="date_deadline" invisible="1">
+                    <field name="date_deadline" widget="remaining_days" invisible="1"/>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="crm_lead_tree_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.tree.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email_from']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="opportunity_sequence"/>
+                <field name="expected_award_date" string="Expected Award Date" optional="hide"/>
+                <field name="expected_delivery_date" string="Expected Delivery Date" optional="hide"/>
+                <field name="margin_percentage" string="GP%" optional="hide"/>
+                <field name="primary_supplier" string="Primary Supplier" optional="hide"/>
+                <field name="lead_type_id" optional="hide"/>
+                <field name="opportunity_classification_id" string="Opportunity Classification" optional="hide"/>
+                <field name="region" string='Region' optional="hide"/>
+                <field name="forecast_category_id" string='Forecast Category' optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_search_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.search.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="opportunity_sequence" string="Opportunity Reference" filter_domain="[
+                        '|',
+                        ('ond_number', 'ilike', self),
+                        ('opportunity_sequence', 'ilike', self)]"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_search_inherit" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="name" string="Order"
+                       filter_domain="['|', '|','|', ('name', 'ilike', self), ('ond_number', 'ilike', self), ('client_order_ref', 'ilike', self), ('partner_id', 'child_of', self)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm.crm_lead_action_pipeline" model="ir.actions.act_window">
+        <field name="context">{'default_type': 'opportunity', 'not_self_saleperson': 1}</field>
+    </record>
+
+    <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+        <field name="context">{'search_default_my_quotation': 1, 'not_self_saleperson': 1}</field>
+    </record>
+
+    <record id="sale.action_orders" model="ir.actions.act_window">
+        <field name="context">{'search_default_my_quotation': 1, 'not_self_saleperson': 1}</field>
+    </record>
+
+</odoo>

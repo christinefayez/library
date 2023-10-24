@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_calibration_graph">
+        <field name="name">calibration.view.graph</field>
+        <field name="model">calibration.view</field>
+        <field name="arch" type="xml">
+            <graph string="Calibration View" type="line">
+                <field name="target" type="row"/>
+                <field name="min_perc" type="measure"/>
+                <field name="max_perc" type="measure"/>
+                <field name="percentage" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_calibration_pivot" model="ir.ui.view">
+        <field name="name">calibration.view.pivot</field>
+        <field name="model">calibration.view</field>
+        <field name="arch" type="xml">
+            <pivot string="Calibration View" disable_linking="True">
+                <field name="year" type="col"/>
+                <field name="target_name" type="row"/>
+                <field name="min_perc" type="measure"/>
+                <field name="max_perc" type="measure"/>
+                <field name="percentage" type="measure"/>
+                <field name="target_appraisals" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="calibration_report_tree" model="ir.ui.view">
+        <field name="name">report.calibration.view.tree</field>
+        <field name="model">calibration.view</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" delete="0">
+                <field name="target"/>
+                <field name="target_name"/>
+                <field name="target_appraisals" sum="Number of Employees"/>
+                <field name="percentage" sum="Total Percentage"/>
+                <!--                <field name="total_appraisals"/>-->
+                <field name="min_perc"/>
+                <field name="max_perc"/>
+                <!--                <field name="year"/>-->
+                <!--                <field name="employee"/>-->
+                <!--                <field name="grade"/>-->
+                <!--                <field name="group"/>-->
+                <!--                <field name="department"/>-->
+                <!--                <field name="section"/>-->
+                <!--                <field name="subsection"/>-->
+                <!--                <field name="contract_group"/>-->
+                <!--                <field name="contract_subgroup"/>-->
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_calibration_report" model="ir.actions.act_window">
+        <field name="name">Calibration view</field>
+        <field name="res_model">calibration.view</field>
+        <field name="view_mode">tree,graph</field>
+        <!--        <field name="view_mode">tree,pivot,graph</field>-->
+    </record>
+
+    <!--    <menuitem id="menu_calibration_view"-->
+    <!--              name="Calibration View"-->
+    <!--              action="action_calibration_report"-->
+    <!--              parent="hr_appraisal_calibration_menuitem_main"-->
+    <!--              sequence="2" groups="base.group_user"/>-->
+</odoo>

@@ -1,0 +1,79 @@
+<odoo>
+<!--    <record id="sale_order_form_inherit" model="ir.ui.view">-->
+<!--        <field name="name">sale.order.form.inherit</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="inherit_id" ref="sale.view_order_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='analytic_account_id']" position="after">-->
+<!--                    <field name="vertical_analytic_account_id" force_save="1" readonly="1" widget="selection"/>-->
+<!--                    <field name="difference_gross_profit" />-->
+<!--                    <field name="less_gross_profit_margin_percentage" />-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="view_sale_order_aggregate" model="ir.ui.view">
+            <field name="name">sale.order.tree.aggregate</field>
+            <field name="model">sale.order</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <tree string="Opportunities/Quotations" class="o_sale_order" create="0" edit="0">
+                    <field name="name" string="Number" readonly="1" decoration-bf="1"/>
+<!--                    <field name="quote_expiry_date" widget="date" optional="show"/>-->
+<!--                    <field name="payment_type" optional="show"/>-->
+<!--                    <field name="type" optional="show"/>-->
+<!--                    <field name="create_by_id" widget="many2one_avatar_user" optional="show"/>-->
+<!--                    <field name="opportunity_sequence" optional="show"/>-->
+<!--                    <field name="opportunity_id" optional="show"/>-->
+<!--                    <field name="opportunity_value" optional="show"/>-->
+                    <field name="partner_id" optional="show" string="Partner/Quotation"/>
+<!--                    <field name="op_partner_id" optional="hide" string="Partner/Opportunity"/>-->
+<!--                    <field name="contact_person_id" optional="hide"/>-->
+<!--                    <field name="function_contact_person" optional="hide"/>-->
+<!--                    <field name="expected_award_date" widget="date" optional="hide"/>-->
+<!--                    <field name="expected_delivery_date" optional="hide"/>-->
+<!--                    <field name="expected_installation_date" optional="hide"/>-->
+<!--                    <field name="expected_invoice_date" optional="hide"/>-->
+<!--                    <field name="product_classification" optional="hide"/>-->
+<!--                    <field name="margin_percentage" optional="show" />-->
+<!--
+                    <field name="budgeted_gp" widget="monetary" optional="show"/>
+-->
+<!--                    <field name="primary_supplier" optional="show"/>-->
+<!--                    <field name="vertical_id" optional="show"/>-->
+                    <field name="user_id" optional="show"/>
+<!--                    <field name="lead_type_id" optional="show"/>-->
+<!--                    <field name="opportunity_classification_id" optional="hide"/>-->
+<!--                    <field name="forecast_category" optional="hide"/>-->
+<!--                    <field name="region" optional="hide"/>-->
+<!--                    <field name="state" optional="hide"/>-->
+<!--                    <field name="op_stage_id" optional="hide"/>-->
+<!--                    <field name="on_hold" optional="hide"/>-->
+<!--                    <field name="is_split" optional="hide"/>-->
+                </tree>
+            </field>
+        </record>
+
+    <record id="action_sale_order_aggregate" model="ir.actions.act_window">
+            <field name="name">Opportunities/Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_id" ref="sale_analytic_account.view_sale_order_aggregate"/>
+            <field name="view_mode">tree,form,graph,pivot</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                View Opportunities/Quotations!
+              </p>
+            </field>
+    </record>
+    
+    <menuitem id="menu_sale_order_aggregation"
+            name="Opportunity/Quote Analysis"
+            parent="sale.menu_sale_report"
+            groups="sales_team.group_sale_manager"
+            action="sale_analytic_account.action_sale_order_aggregate"
+            sequence="4"/>
+
+</odoo>

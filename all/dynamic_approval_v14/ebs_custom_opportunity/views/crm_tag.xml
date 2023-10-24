@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="crm_tag_tree_inherit" model="ir.ui.view">
+        <field name="name">crm.tag.tree.inherit</field>
+        <field name="model">crm.tag</field>
+        <field name="inherit_id" ref="sales_team.sales_team_crm_tag_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="color" position="after">
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

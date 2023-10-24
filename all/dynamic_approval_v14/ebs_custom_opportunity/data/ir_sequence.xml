@@ -1,0 +1,29 @@
+<odoo noupdate="1">
+
+    <record id="seq_customer_reference" model="ir.sequence">
+        <field name="name">Customer Reference</field>
+        <field name="code">res.partner</field>
+        <field name="prefix">CUST/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_opportunity_reference" model="ir.sequence">
+        <field name="name">Opportunity Reference</field>
+        <field name="code">crm.lead</field>
+        <field name="prefix">ORN/2021/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="increment_class_number_sequence" model="ir.sequence">
+        <field name="name">Product Classification Number</field>
+        <field name="code">increment_class_number</field>
+        <field name="prefix">Class-</field>
+        <field name="padding">2</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

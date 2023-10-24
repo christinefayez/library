@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="create_hr_mass_appraisal_view_action" model="ir.actions.act_window">
+            <field name="name">Create Appraisals</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.mass.appraisal</field>
+            <field name="view_mode">form</field>
+<!--            <field name="view_id" ref="create_hr_mass_appraisal_view_form"/>-->
+            <field name="target">new</field>
+        </record>
+
+        <record id="create_hr_mass_appraisal_empty_view_action" model="ir.actions.act_window">
+            <field name="name">Create Appraisals</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.mass.appraisal.empty</field>
+            <field name="view_mode">form</field>
+<!--            <field name="view_id" ref="create_hr_mass_appraisal_empty_view_form"/>-->
+            <field name="target">new</field>
+        </record>
+
+        <record id="create_hr_mass_appraisal_view_form" model="ir.ui.view">
+            <field name="name">create.hr.mass.appraisal.form</field>
+            <field name="model">hr.mass.appraisal</field>
+            <field name="arch" type="xml">
+                <form string="Create Appraisals">
+                    <group class="oe_title">
+                        <field name="related_appraisal_form" readonly="1"/>
+                    </group>
+                    <group string="Employees">
+                        <field name="employee_ids" nolabel="1" options="{'no_open': True, 'no_edit': True, 'no_create': True}">
+                            <tree  editable="bottom">
+                                <field name="company_id" invisible="1"/>
+                                <field name="name" readonly="1"/>
+                                <field name="parent_id" readonly="1"/>
+                                <field name="department_id"/>
+                                <field name="job_id"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="create_appraisals" string="Generate Appraisal" type="object" class="btn-primary"/>
+<!--                        <button name="remove_all" string="Remove All Employees" type="object" class="btn-secondary"/>-->
+                        <button name="%(create_hr_mass_appraisal_empty_view_action)d"
+                                string="Remove All Employees"
+                                type="action"
+                                context="{'default_related_appraisal_form':related_appraisal_form}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="create_hr_mass_appraisal_empty_view_form" model="ir.ui.view">
+            <field name="name">create.hr.mass.appraisal.empty.form</field>
+            <field name="model">hr.mass.appraisal.empty</field>
+            <field name="arch" type="xml">
+                <form string="Create Appraisals">
+                    <group class="oe_title">
+                        <field name="related_appraisal_form" readonly="1" force_save="1"/>
+                    </group>
+                    <group string="Employees">
+                        <field name="employee_ids" nolabel="1" options="{'no_open': True, 'no_edit': True, 'no_create': True}">
+                            <tree editable="bottom">
+                                <field name="company_id" invisible="1"/>
+                                <field name="name" readonly="1"/>
+                                <field name="parent_id" readonly="1"/>
+                                <field name="department_id"/>
+                                <field name="job_id"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="create_appraisals" string="Generate Appraisal" type="object" class="btn-primary"/>
+<!--                        <button name="remove_all" string="Remove All Employees" type="object" class="btn-secondary"/>-->
+                        <button name="%(create_hr_mass_appraisal_empty_view_action)d"
+                                string="Remove All Employees"
+                                type="action"
+                                context="{'default_related_appraisal_form':related_appraisal_form}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

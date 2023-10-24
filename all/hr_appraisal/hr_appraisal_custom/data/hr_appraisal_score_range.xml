@@ -1,0 +1,27 @@
+<odoo noupdate="1">
+
+    <record id="below_expectation_approval_score_range" model="hr.appraisal.score.range">
+        <field name="name">Below expectation</field>
+        <field name="percentage_from" eval="-999999"/>
+        <field name="percentage_to" eval="75"/>
+    </record>
+
+    <record id="effective_approval_score_range" model="hr.appraisal.score.range">
+        <field name="name">Effective</field>
+        <field name="percentage_from" eval="75"/>
+        <field name="percentage_to" eval="90"/>
+    </record>
+
+    <record id="highly_effective_approval_score_range" model="hr.appraisal.score.range">
+        <field name="name">Highly effective</field>
+        <field name="percentage_from" eval="90"/>
+        <field name="percentage_to" eval="100"/>
+    </record>
+
+    <record id="outstanding_approval_score_range" model="hr.appraisal.score.range">
+        <field name="name">Outstanding</field>
+        <field name="percentage_from" eval="100"/>
+        <field name="percentage_to" eval="999999"/>
+    </record>
+
+</odoo>

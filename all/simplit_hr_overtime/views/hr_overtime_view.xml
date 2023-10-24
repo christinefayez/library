@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+		<record id="simplit_overtime_management_tree" model="ir.ui.view">
+			<field name="name">simplit.hr.overtime.tree</field>
+			<field name="model">simplit.hr.overtime</field>
+			<field name="arch" type="xml">
+				<tree string="Overtime Records" editable="bottom">
+					<field name="employee_id"/>
+					<field name="manager_id"/>
+          <field name="day_type"/>
+          <!-- <field name="day_period"/> -->
+          <field name="time_frame"/>
+          <field name="start_date"/>
+          <field name="effective_date"/>
+					<!-- <field name="only_day"/>
+					<field name="emp_week_off"/> -->
+					<field name="actual_overtime_hours" widget="float_time"/>
+					<field name="overtime_hours" widget="float_time"/>
+					<field name="weekend_working" widget="float_time"/>
+          <field name="state"/>
+				</tree>
+			</field>
+		 </record>
+
+		<record id="simplit_overtime_management_search" model="ir.ui.view">
+			<field name="name">simplit.hr.overtime.search</field>
+			<field name="model">simplit.hr.overtime</field>
+			<field name="arch" type="xml">
+				<search string="Overtime Records">
+					<field name="employee_id"/>
+					<field name="manager_id"/>
+					<field name="start_date"/>
+					<field name="only_day"/>
+					<separator/>
+					 <group expand="1" string="Group By">
+						<filter string="Employee" name="employee_id" context="{'group_by':'employee_id'}"/>
+						<filter string="Manager" name="manager_id" context="{'group_by':'manager_id'}"/>
+						<filter string="Date" name="start_date" context="{'group_by':'start_date'}"/>
+						<filter string="State" name="state" context="{'group_by':'state'}"/>
+					 </group>
+				</search>
+			</field>
+		</record>
+
+		<record id="simplit_overtime_management_form" model="ir.ui.view">
+			<field name="name">simplit.hr.overtime.form</field>
+			<field name="model">simplit.hr.overtime</field>
+			<field name="arch" type="xml">
+				<form string="Overtime Records">
+				<header>
+					<button name="action_submit" type="object" string="Submit" groups="base.group_user" attrs="{'invisible':[('state', '!=', 'draft')]}"/>
+					<button name="action_cancel" type="object" string="Cancel" groups="base.group_user,hr.group_hr_manager" attrs="{'invisible':[('state', '!=', 'confirm')]}"/>
+					<button name="action_approve" type="object" string="Approve" groups="hr.group_hr_manager" attrs="{'invisible':[('state', '!=', 'confirm')]}"/>
+					<button name="action_refuse" type="object" string="Refuse" groups="hr.group_hr_manager" attrs="{'invisible':[('state', '!=', 'confirm')]}"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,confirm,refuse,validate,cancel"/>
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button name="action_view_attendance"
+								type="object"
+								class="oe_stat_button"
+								icon="fa-user"
+								string="Attendance"/>
+					</div>
+					<group>
+						<group>
+							<field name="employee_id"  readonly="0"/>
+							<field name="manager_id" readonly="0"/>
+              <field name="day_type"/>
+              <field name="time_frame"/>
+              <!-- <field name="day_period"/> -->
+						</group>
+						<group>
+							<field name="start_date" readonly="0"/>
+              <field name="effective_date" readonly="0" force_save="1"/>
+							<field name="overtime_hours" widget="float_time"/>
+							<field name="weekend_working" widget="float_time"/>
+							<field name="actual_overtime_hours" widget="float_time" readonly="0" />
+							<field name="attendance_id" invisible="1"/>
+							<field name="only_day" invisible="0"/>
+							<field name="emp_week_off" invisible="0"/>
+						</group>
+					</group>
+				   <notebook>
+						<page string="Notes">
+							<field name="notes"/>
+						</page>
+				   </notebook>
+				</sheet>
+			   </form>
+			</field>
+		</record>
+
+		<record id="action_simplit_overtime_management" model="ir.actions.act_window">
+			<field name="name">Overtime</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">simplit.hr.overtime</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="simplit_overtime_management_search"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Create Overtime Request
+				</p>
+			</field>
+		</record>
+
+		<menuitem action="action_simplit_overtime_management" name="Overtime"
+			id="menu_action_simplit_overtime_management" parent="hr_attendance.menu_hr_attendance_my_attendances"
+			sequence="1"/>
+
+<!--  Inherits HR Contract View-->
+<!--		<record id="hr_contract_view_form2" model="ir.ui.view">-->
+<!--			<field name="name">hr.contract.form2</field>-->
+<!--			<field name="model">hr.contract</field>-->
+<!--			<field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>-->
+<!--			<field name="arch" type="xml">-->
+<!--				<data>-->
+<!--					<xpath expr="//group[@name='duration_group']" position="after">-->
+<!--						<group name="overtime_pay" string="Overtime Clock">-->
+<!--&lt;!&ndash;						<field name="work_hours"/>&ndash;&gt;-->
+<!--							<field name="weekday_overtime_rate"/>-->
+<!--							<field name="weekend_overtime_rate"/>-->
+<!--						</group>-->
+<!--					</xpath>-->
+<!--				</data>-->
+<!--			</field>-->
+<!--		</record>-->
+
+<!-- Inherits HR Attendance View -->
+
+		<record id="hr_attendance_view_form2" model="ir.ui.view">
+			<field name="name">hr.attendance.form2</field>
+			<field name="model">hr.attendance</field>
+			<field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='check_out']" position="after">
+						<field name="overtime_created" default = "0" invisible="1"/>
+						<field name="only_date" invisible="1"/>
+						<field name="only_day_in" invisible="1"/>
+
+						<field name="off_day" invisible="1"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="hr_attendance_tree" model="ir.ui.view">
+			<field name="name">hr.attendance.tree</field>
+			<field name="model">hr.attendance</field>
+			<field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='check_out']" position="after">
+						<field name="worked_hours" widget="float_time" />
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+
+		<record id="hr_config_settings_view_form2" model="ir.ui.view">
+			<field name="name">res.config.settings.form</field>
+			<field name="model">res.config.settings</field>
+			<field name="inherit_id" ref="hr.res_config_settings_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//div[@data-key='hr']/div[1]" position="inside">
+					 	<div class="col-12 col-lg-6 o_setting_box">
+							<div class="o_setting_right_pane">
+								<label for="pay_type_settings"/>
+								<field name="pay_type_settings"/>
+							</div>
+							<div class="o_setting_right_pane">
+								<label for="allowed_over_time" attrs="{'invisible': [('pay_type_settings', '=', 'none')]}"/>
+								<field name="allowed_over_time" attrs="{'invisible': [('pay_type_settings', '=', 'none')]}"/>
+							</div>
+                            <div class="o_setting_right_pane">
+								<label for="simplit_overtime_max_setting" attrs="{'invisible': [('pay_type_settings', '=', 'none')]}"/>
+								<field name="simplit_overtime_max_setting" attrs="{'invisible': [('pay_type_settings', '=', 'none')]}"/>
+							</div>
+							<div class="o_setting_right_pane">
+								<label for="amount_settings" attrs="{'invisible': ['|',('pay_type_settings', '=', 'based_on_wage'),('pay_type_settings', '=', 'none')]}"/>
+								<field name="amount_settings"  attrs="{'invisible': ['|',('pay_type_settings', '=', 'based_on_wage'),('pay_type_settings', '=', 'none')]}"/>
+							</div>
+<!--							<div class="o_setting_right_pane">-->
+<!--								<label for="week_day_pay_settings" attrs="{'invisible': ['|',('pay_type_settings', '=', 'fixed_amount'),('pay_type_settings', '=', 'none')]}"/>-->
+<!--								<field name="week_day_pay_settings"  attrs="{'invisible': ['|',('pay_type_settings', '=', 'fixed_amount'),('pay_type_settings', '=', 'none')]}"/>-->
+<!--							</div>-->
+<!--							<div class="o_setting_right_pane">-->
+<!--								<label for="week_off_pay_settings" attrs="{'invisible': ['|',('pay_type_settings', '=', 'fixed_amount'),('pay_type_settings', '=', 'none')]}"/>-->
+<!--								<field name="amount_settings"  attrs="{'invisible': ['|',('pay_type_settings', '=', 'fixed_amount'),('pay_type_settings', '=', 'none')]}"/>-->
+<!--							</div>-->
+<!--							<div class="o_setting_right_pane">-->
+<!--								<label for="weekday_overtime_rate_set" attrs="{'invisible': [('pay_type_settings', '=', 'none')]}"/>-->
+<!--								<field name="weekday_overtime_rate_set" attrs="{'invisible': [('pay_type_settings', '=', 'none')]}"/>-->
+<!--							</div>-->
+
+<!--							<div class="o_setting_right_pane">-->
+<!--								<label for="weekend_overtime_rate_set" attrs="{'invisible': [('pay_type_settings', '=', 'none')]}"/>-->
+<!--								<field name="weekend_overtime_rate_set" attrs="{'invisible': [('pay_type_settings', '=', 'none')]}"/>-->
+<!--							</div>-->
+                        </div>
+				</xpath>
+			</field>
+		</record>
+
+
+
+		<record id="view_hr_payslip_form_inherits" model="ir.ui.view">
+			<field name="name">hr.payslip.form</field>
+			<field name="model">hr.payslip</field>
+			<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='credit_note']" position="after">
+					<field name="overtime_of_month" widget="float_time" invisible="1"/>
+					<field name="total_overtime_count" invisible="1"/>
+					<field name="fixed_ot_amount" string="Fixed OT" readonly="1" invisible="1"/>
+					<field name="friday_off_count" readonly="1" invisible="1"/>
+					<!-- <field name="holidays_alw" readonly="1" invisible="0"/> -->
+					<field name="weekday_ot_month" string="week day Overtime" widget="float_time" invisible="1"/>
+					<field name="weekends_ot_month" string="WeekOff Worked Hours" widget="float_time" invisible="1"/>
+					<field name="unpaid_leaves" invisible="1"/>
+					<field name="sick_leaves_duration" invisible="1"/>
+					<field name="fixed_ot" invisible="1"/>
+					<field name="wage_ot"  invisible="1"/>
+				</xpath>
+				<xpath expr="//div[@name='button_box']" position="inside">
+          <button name="overtime_employee"
+							class="oe_stat_button"
+							icon="fa-clock-o"
+							string="Overtime"
+							type="object">
+						<field name="overtime_of_month" help="Total Overtime Hours" widget="float_time"/>
+					</button>
+					<button name="sick_leaves_view"
+							class="oe_stat_button"
+							icon="fa-calendar"
+							string="Sick Leave"
+							type="object">
+						<field name="sick_leaves_duration" force_save="1" widget="statinfo"/>
+					</button>
+          <button disabled="1" name="352" type="action" class="oe_stat_button" icon="fa-calendar" context="{'search_default_employee_id': employee_id}" groups="base.group_user" help="Remaining leaves">
+              <div class="o_field_widget o_stat_info">
+                  <span class="o_stat_value">
+                      <field name="annual_leaves_allocation_used_count"/>/<field name="annual_leaves_allocation_count"/> Days
+                  </span>
+                  <span class="o_stat_text">
+                      Annual Leaves
+                  </span>
+              </div>
+          </button>
+					<button name="unpaid_leaves_view"
+							class="oe_stat_button"
+							string="Unpaid Leaves"
+							type="object">
+						:<field name="unpaid_leaves" force_save="1" help="Total unpaid days" widget="statinfo"/>
+					</button>
+				</xpath>
+				<xpath expr="//div[@class='oe_title']" position="after">
+					<div class="oe_title_arabic">
+						<label for="name_in_arabic_pay" class="oe_edit_only"/>
+						<h1><field name="name_in_arabic_pay" placeholder="Employee's Name in Arabic"/>
+					</h1>
+				</div>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="simplit_weekoff_tree" model="ir.ui.view">
+			<field name="name">week.off.tree</field>
+			<field name="model">week.off</field>
+			<field name="arch" type="xml">
+				<tree string="WeekOff Records">
+					<field name="employee_id"/>
+					<field name="weekoff_date"/>
+					<field name="weekoff_day"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="simplit_weekoff_form" model="ir.ui.view">
+			<field name="name">week.off.form</field>
+			<field name="model">week.off</field>
+			<field name="arch" type="xml">
+				<form string="WeekOff Records">
+				<header>
+	                <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
+	                <button string="Approve" name="action_approve" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+	                <button string="Validate" name="action_validate" states="validate1" type="object" groups="hr_holidays.group_hr_holidays_manager" class="oe_highlight"/>
+	                <button string="Refuse" name="action_refuse"  type="object" attrs="{'invisible': [('state', 'not in', ('confirm','validate','validate1'))]}"/>
+	                <button string="Reset to Draft" name="action_draft" type="object"
+                        attrs="{'invisible': [('state', 'not in', ['confirm', 'refuse'])]}"/>
+	                <field name="state" widget="statusbar" statusbar_visible="confirm,validate"/>
+            	</header>
+					<group>
+						<group>
+							<field name="employee_id"/>
+							<field name="weekoff_date"/>
+							<field name="weekoff_day"/>
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_simplit_weekoff" model="ir.actions.act_window">
+			<field name="name">WeekOff Request</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">week.off</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Week Off Request
+				</p>
+			</field>
+		</record>
+
+		<record id="overtime_partial_approval_wizard_action_server" model="ir.actions.server">
+            <field name="name">Overtime Partial Approval</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_simplit_hr_overtime"/>
+             <field name="binding_model_id" ref="model_simplit_hr_overtime"/>
+            <field name="state">code</field>
+            <field name="code">action=records.get_the_action_of_partial_approval()</field>
+        </record>
+
+
+
+
+
+		<menuitem action="action_simplit_weekoff"
+			name="WeekOff Request"
+			id="menu_action_simplit_weekoff"
+			parent="hr_attendance.menu_hr_attendance_my_attendances"/>
+	</data>
+</odoo>

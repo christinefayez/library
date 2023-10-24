@@ -1,0 +1,42 @@
+<odoo>
+
+<!--    <record id="account_analytic_account_approval_role_form" model="ir.ui.view">-->
+<!--        <field name="name">account.analytic.account.approval.role.form</field>-->
+<!--        <field name="model">account.analytic.account.approval.role</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="Analytic Account Approval Role">-->
+<!--                <sheet>-->
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="role_id"/>-->
+<!--                            <field name="user_id" options="{'no_create': True}"-->
+<!--                                   attrs="{'invisible':[('use_dynamic_user','=',True)],'required':[('use_dynamic_user','=',False)]}"/>-->
+<!--                            <field name="model_id" options="{'no_create': True}"-->
+<!--                                   attrs="{'invisible':[('use_dynamic_user','=',False)],'required':[('use_dynamic_user','=',True)]}"/>-->
+<!--                            <field name="model_user_field_id" options="{'no_create':true}"-->
+<!--                                   string="Default User for SP"-->
+<!--                                   attrs="{'invisible':[('use_dynamic_user','=',False)],'required':[('use_dynamic_user','=',True)]}"-->
+<!--                                   domain="[('model_id', '=', model_id),('ttype', '=', 'many2one'),('relation', '=', 'res.users')]"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="use_dynamic_user" widget="boolean_toggle"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </sheet>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record id="account_analytic_account_approval_role_tree" model="ir.ui.view">-->
+<!--        <field name="name">account.analytic.account.approval.role.tree</field>-->
+<!--        <field name="model">account.analytic.account.approval.role</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <tree string="Analytic Account Approval Role">-->
+<!--                <field name="role_id"/>-->
+<!--                <field name="user_id" options="{'no_create': True}"/>-->
+<!--                <field name="use_dynamic_user"/>-->
+<!--            </tree>-->
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

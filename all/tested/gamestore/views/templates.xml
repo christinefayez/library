@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+           <!-- Inherit quotation report (from module sale) -->
+        <template id="report_quotation_inherit_demo" inherit_id="sale.report_saleorder_document">
+	    <!-- Finds the first table with as class table table-condensed and gives the ability to modify it
+		 This will replace everything withing tr (including tr)-->
+
+	    <xpath expr="//table[@class='table table-sm o_main_table']//thead//tr//th[1]" position="after">
+
+                        <th>Partner Code</th>
+
+
+	    </xpath>
+	    <xpath expr="//tbody[@class='sale_tbody']//tr//td[1]" position="after">
+            <td>
+                <t t-foreach="line.product_id.customer_code_ids" t-as="code">
+                    <t t-if="doc.partner_id">
+                   <t t-if ='code.partner_id.id == doc.partner_id.id'>
+                      <span t-field="code.Customer_code"/>
+                   </t>
+                    </t>
+                </t>
+            </td>
+	    </xpath>
+
+
+        </template>
+
+<!--        <template id="report_invoice_inherit_demo" inherit_id="account.report_invoice_document">-->
+<!--	    &lt;!&ndash; Finds the first table with as class table table-condensed and gives the ability to modify it-->
+<!--		 This will replace everything withing tr (including tr)&ndash;&gt;-->
+<!--	    <xpath expr="//table[@class='table table-sm o_main_table']//thead//tr//th[1]" position="after">-->
+
+<!--                        <th>Partner Code</th>-->
+
+
+<!--	    </xpath>-->
+<!--	    <xpath expr="//tbody[@class='invoice_tbody']//tr//td[1]" position="after">-->
+<!--            <t t-foreach="line.product_id.customer_code_ids" t-as="code">-->
+<!--                <t t-if ='code.partner_id.id == doc.partner_id.id'>-->
+<!--                    <td><span t-field="code.Customer_code"/></td>-->
+<!--                </t>-->
+<!--            </t>-->
+
+<!--	    </xpath>-->
+<!--        </template>-->
+    </data>
+</odoo>

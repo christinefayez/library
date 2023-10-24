@@ -1,0 +1,179 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="hr_appraisal_feedback_list">
+            <field name="name">hr feedback list</field>
+            <field name="model">hr.feedback</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                    <field name="feedback_type"/>
+                    <field name="feedback"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_appraisal_feedback_form">
+            <field name="name">hr feedback form</field>
+            <field name="model">hr.feedback</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="can_submit" invisible="1"/>
+                        <button string="Submit"
+                                attrs="{'invisible':['|',('can_submit','=',False),('state','=','submitted')]}"
+                                class="btn btn-primary" type="object" name="submit_feedback"/>
+                        <button name="action_print_appraisal" string="Print Related Appraisal" type="object"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="user_id"/>
+                                <field name="requested_user"/>
+                                <field name="related_appraisal"/>
+                            </group>
+                            <group>
+                                <field name="feedback_type"/>
+                                <field name="related_objectives"
+                                       attrs="{'invisible':[('feedback_type','!=','objectives')],'required':[('feedback_type','=','objectives')]}"
+
+                                       domain="[('related_appraisal','=',related_appraisal)]"/>
+                                <field name="feedback_before"/>
+                                <field name="feedback_submit"/>
+                            </group>
+
+                        </group>
+
+                        <group>
+                            <field name="feedback"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="hr_appraisal_feedback_form_request">
+            <field name="name">hr feedback form</field>
+            <field name="model">hr.feedback</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="user_id"/>
+                                <field name="requested_user"/>
+                                <field name="related_appraisal"/>
+                            </group>
+                            <group>
+                                <field name="feedback_type"/>
+                                <field name="related_objectives"
+                                       attrs="{'invisible':[('feedback_type','!=','objectives')],'required':[('feedback_type','=','objectives')]}"
+                                       domain="[('related_appraisal','=',related_appraisal)]"/>
+                                <field name="feedback_before"/>
+                                <field name="feedback_submit"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="hr_appraisal_feedback.hr_appraisal_request_action_window">
+            <field name="name">Appraisal Feedback Request</field>
+            <field name="res_model">hr.feedback</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_appraisal_feedback_form_request"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_hr_appraisal_form_inherited">
+            <field name="name">hr.appraisal.form</field>
+            <field name="model">hr.appraisal</field>
+            <field name="inherit_id" ref="hr_appraisal_custom.view_hr_appraisal_form_inherited"/>
+            <field name="arch" type="xml">
+
+
+                <!--                <xpath expr="//field[@name='appraisal_objectives']//group" position="after">-->
+                <!--                    <notebook>-->
+                <!--                        <page name="feedback" string="Feedback">-->
+                <!--                            <field name="can_request_feedback" invisible="1"/>-->
+                <!--                            <button name="%(hr_appraisal_feedback.hr_appraisal_request_action_window)d"-->
+                <!--                                    string="Request a Feedback"-->
+                <!--                                    type="action" class="oe_highlight"-->
+                <!--                                    attrs="{'invisible':[('can_request_feedback','=',False)]}"-->
+                <!--                                    context="{-->
+                <!--                                'default_related_employee':related_employee,-->
+                <!--                                'default_related_objectives':id,-->
+                <!--                                                        }"/>-->
+                <!--                            <field name="related_feedback" nolabel="1">-->
+                <!--                                <tree create="0" edit="0" delete="0">-->
+                <!--                                    <field name="name"/>-->
+                <!--                                    <field name="user_id"/>-->
+                <!--                                    <field name="state"/>-->
+                <!--                                    <field name="feedback_type"/>-->
+                <!--                                    <field name="feedback"/>-->
+                <!--                                </tree>-->
+                <!--                            </field>-->
+                <!--                        </page>-->
+                <!--                    </notebook>-->
+                <!--                </xpath>-->
+
+                <page name="training" position="after">
+                    <page name="feedback" string="Feedback">
+                        <field name="can_request_feedback" invisible="1"/>
+                        <field name="can_see_feedback" invisible="1"/>
+                        <button name="%(hr_appraisal_feedback.hr_appraisal_request_action_window)d"
+                                string="Request a Feedback"
+                                type="action" class="oe_highlight"
+                                attrs="{'invisible':[('can_request_feedback','=',False)]}"
+                                context="{
+                                'default_related_employee':employee_id,
+                                'default_related_appraisal':id,
+                                                        }"/>
+                        <field name="related_feedback" attrs="{'invisible':[('can_see_feedback','=',False)]}">
+                            <tree create="0" edit="0" delete="0">
+                                <field name="name"/>
+                                <field name="user_id"/>
+                                <field name="feedback_type"/>
+                                <field name="feedback"/>
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+
+
+        <record model="ir.actions.act_window" id="hr_appraisal_feedback.hr_appraisal_action_window">
+            <field name="name">Appraisal Feedback</field>
+            <field name="res_model">hr.feedback</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">['|',('user_id', '=', uid), ('requested_user', '=', uid)]
+            </field>
+
+        </record>
+
+
+        <menuitem name="Appraisal Feedback" id="hr_appraisal_feedback.hr_appraisal_feedback"
+                  parent="hr_appraisal.menu_hr_appraisal_root"
+                  action="hr_appraisal_feedback.hr_appraisal_action_window" />
+<!--                  groups="security_rules.group_strata_hc"/>-->
+
+    </data>
+</odoo>

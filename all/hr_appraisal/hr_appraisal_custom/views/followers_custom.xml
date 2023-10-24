@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    <template id="assets_backend_custom" inherit_id="mail.assets_backend">-->
+<!--        <xpath expr="script[contains(@src, '/mail/static/src/js/followers.js')]" position="replace">-->
+<!--            <script type="text/javascript" src="/hr_appraisal_custom/static/src/js/followers.js"></script>-->
+<!--        </xpath>-->
+
+<!--    </template>-->
+
+</odoo>

@@ -1,0 +1,400 @@
+<odoo>
+    <record model="ir.ui.view" id="view_order_form_inherit">
+        <field name="name">view.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@name='partner_details']" position="inside">
+                <field name="create_date" attrs="{'invisible': [('create_date','=',False)]}"/>
+                <field name="allowed_create_by_ids" invisible="1" widget="many2many_tags"/>
+                <field name="create_by_id" domain="[('id', 'in', allowed_create_by_ids)]" force_save="1"
+                       widget="many2one_avatar_user"
+                       attrs="{'readonly': [('state','in', ['won', 'otr_approval', 'sale', 'done', 'cancel', 'revised'])]}"/>
+                <field name="write_date" string="Modified date" attrs="{'invisible': [('write_date','=',False)]}"/>
+                <field name="write_uid" string="Modified by" attrs="{'invisible': [('write_uid','=',False)]}"/>
+                <field name="user_id" position="move"/>
+                <field name="lpo_date"
+                       attrs="{'readonly': [('state','in', ['won', 'otr_approval', 'sale', 'done', 'cancel'])]}"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="attrs">{'required': [('opportunity_id','!=',False),
+                    ('visible_customize_fields','=',True)]}
+                </attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+                <attribute name="string">Customer Name</attribute>
+                <attribute name="domain">
+                    [('is_company','=',True),'|',('company_id','=',False),('company_id','=',company_id)]
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="trade_license_number" options="{'no_create': True}"
+                       attrs="{'readonly': [('state','in', ['won', 'otr_approval', 'sale', 'done', 'cancel', 'revised'])]}"/>
+            </xpath>
+            <xpath expr="//field[@name='commitment_date']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state','=', 'revised')]}</attribute>
+            </xpath>
+
+            <xpath expr="//div[hasclass('o_td_label')]" position="attributes">
+                <attribute name="groups"/>
+            </xpath>
+            <field name="date_order" position="attributes">
+                <attribute name="groups"/>
+            </field>
+            <xpath expr="//page[@name='customer_signature']" position="attributes">
+                <attribute name="groups"/>
+            </xpath>
+            <field name="validity_date" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="attrs">{}</attribute>
+                <attribute name="force_save">1</attribute>
+            </field>
+            <field name="client_order_ref" position="attributes">
+                <attribute name="invisible">0</attribute>
+                <attribute name="attrs">{'readonly': [('state','=', 'revised')]}</attribute>
+            </field>
+            <field name="team_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="origin" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <xpath expr="//page[@name='order_lines']" position="inside">
+                <button string="Import" type="object" name="action_import_excel_sheet" class="btn btn-primary"
+                        attrs="{'invisible': [('state','=', 'revised')]}"/>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']" position="after">
+                <page string="Opportunity Information" name="opportunity_info"
+                      attrs="{'invisible': [('visible_customize_fields','=',False)]}">
+                    <group>
+                        <group>
+                            <field name="opportunity_status" widget="selection"
+                                   attrs="{'required': [('opportunity_id','!=',False), ('visible_customize_fields','=',True)],'invisible':[('opportunity_status','=',False)]}"
+                                   options="{'no_create_edit': True, 'no_create': True}"/>
+                            <field name="lead_type_id" widget="selection"
+                                   attrs="{'invisible':[('lead_type_id','=',False)]}"
+                                   options="{'no_create_edit': True, 'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="origin" attrs="{'readonly': [('state','=', 'revised')]}"/>
+                            <field name="forecast_category" widget="selection"
+                                   attrs="{'invisible':[('forecast_category','=',False)]}"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="delivery_details" string="Delivery Details"
+                      attrs="{'invisible':[('visible_customize_fields','=',False)]}">
+                    <group>
+                        <group>
+                            <field name="expected_award_date"/>
+                            <field name="expected_delivery_date"/>
+                            <field name="expected_invoice_date"/>
+                            <field name="expected_installation_date"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </page>
+                <page string="Approval History" name="approval_history"
+                      attrs="{'invisible':[('approval_history_ids','=',False)]}">
+                    <field name="approval_history_ids">
+                        <tree create="0" edit="0" delete="0">
+                            <field name="user_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="status"/>
+                            <field name="sale_order_status"/>
+                            <field name="action_date"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='opportunity_status']" position="before">
+                <field name="opportunity_id" position="move"/>
+                <field name="tag_ids" position="move"/>
+            </xpath>
+            <xpath expr="//field[@name='opportunity_id']" position="attributes">
+                <attribute name="string">Opportunity Name</attribute>
+                <attribute name="groups"></attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_order'][2]" position="after">
+                <field name="quote_expiry_date" attrs="{'invisible': [('visible_customize_fields','=',False)],
+                                                   'required': [('visible_customize_fields','=',True)], 'readonly': [('state','in', ['won', 'otr_approval', 'sale', 'done', 'cancel', 'revised'])]}"/>
+                <!--                <field name="expire_days" attrs="{'invisible': [('visible_customize_fields','=',False)]}"/>-->
+            </xpath>
+            <group name="order_details" position="inside">
+                <field name="payment_type" string="Payment Type" attrs="{'invisible': [('visible_customize_fields','=',False)],
+                                                       'required': [('visible_customize_fields','=',True)], 'readonly': [('state','in', ['won', 'otr_approval', 'sale', 'done', 'cancel', 'revised'])]}"/>
+                <field name="opportunity_sequence" attrs="{'invisible': [('visible_customize_fields','=',False)]}"/>
+                <field name="opportunity_amount" class="oe_inline" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"
+                       attrs="{'invisible': [('visible_customize_fields','=',False)]}"/>
+                <field name="ond_number"
+                       attrs="{'invisible': [('visible_customize_fields','=',False)], 'readonly': [('state','=', 'revised')]}"/>
+                <field name="lpo_number"
+                       attrs="{'readonly': [('state','in', ['won', 'otr_approval', 'sale', 'done', 'cancel', 'revised'])]}"/>
+                <field name="lpo_attachment_filename" invisible="1"/>
+                <field name="lpo_attachment" widget="binary" filename="lpo_attachment_filename"
+                       attrs="{'readonly': [('state','=', 'revised')]}"/>
+            </group>
+            <field name="client_order_ref" position="after">
+                <field name="is_product_available" widget="boolean_toggle"
+                       attrs="{'invisible': [('visible_customize_fields','=',False)], 'readonly': [('state','=', 'revised')]}"/>
+                <field name="landed_cost_id" options="{'no_open':true,'no_create':true}"
+                       attrs="{'invisible': [('is_product_available','=',False)], 'readonly': [('state','=', 'revised')]}"/>
+            </field>
+            <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="string">Delivery Address</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                <attribute name="string">Invoice Address</attribute>
+            </xpath>
+            <field name="partner_shipping_id" position="after">
+                <field name="visible_customize_fields" invisible="1"/>
+                <field name="visible_ehs_only_customize_fields" invisible="1"/>
+                <field name="type" options="{'no_create_edit': True, 'no_create': True}" widget="selection"
+                       attrs="{'invisible': [('visible_customize_fields','=',False)],
+                                   'required': [('visible_customize_fields','=',True)], 'readonly': [('state','in', ['won', 'otr_approval', 'sale', 'done', 'cancel', 'revised'])]}"/>
+                <field name="is_installation_required"
+                       attrs="{'invisible': [('visible_customize_fields','=',False)],
+                                   'required': [('visible_customize_fields','=',True)], 'readonly': [('state','in', ['won', 'otr_approval', 'sale', 'done', 'cancel', 'revised'])]}"/>
+            </field>
+            <xpath expr="//page[@name='other_information']" position="inside">
+                <group name="tsg_info" string="TSG Info"
+                       attrs="{'invisible': [('visible_customize_fields','=',False)]}">
+                    <group>
+                        <field name="tsg_share" attrs="{'readonly': [('state','=', 'revised')]}"/>
+                        <field name="tsg_value" attrs="{'required': [('tsg_share','=',True)],
+                                                            'invisible': [('tsg_share','=',False)], 'readonly': [('state','=', 'revised')]}"/>
+                        <field name="tsg_user" domain="[('share', '=', False)]" widget="many2one_avatar_user"
+                               attrs="{'required': [('tsg_share','=',True)],
+                                           'invisible': [('tsg_share','=',False)], 'readonly': [('state','=', 'revised')]}"/>
+                    </group>
+                </group>
+                <group name="LPO Info" string="LPO Info"
+                >
+                    <group>
+                        <field name="lpo_number" attrs="{'readonly': [('state','=', 'revised')]}"/>
+                        <field name="lpo_date"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='source_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state','=', 'revised')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='medium_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state','=', 'revised')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='campaign_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state','=', 'revised')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state','=', 'revised')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state','=', 'revised')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='signature']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state','=', 'revised')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='signed_on']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state','=', 'revised')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='signed_by']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state','=', 'revised')]}</attribute>
+            </xpath>
+            <xpath expr="//page[@name='other_information']/group/group[@name='sales_person']/field[@name='company_id']" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </xpath>
+            <!--  sale order line form view  -->
+            <xpath expr="//field[@name='order_line']/form/group/group[1]/field[@name='product_id']"
+                   position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/form/group/group[1]" position="inside">
+                <field name="expect_delivery_date"
+                       attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"/>
+                <field name="actual_delivery_date"
+                       attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/form/group/group[2]/field[@name='analytic_tag_ids']"
+                   position="after">
+                <field name="supplier_id"/>
+                <field name="supplier_payment_term_id"
+                       attrs="{'invisible': ['|',('parent.visible_customize_fields','=',False),('parent.is_product_available','=',True)]}"/>
+                <field name="delivery_within"
+                       attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"/>
+                <field name="unit_buying_price"/>
+                <field name="expected_supplier_discount"/>
+                <field name="unit_buying_after_discount"
+                />
+                <field name="freight_charge_amt"
+                       attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"/>
+                <field name="finance_charge"
+                       attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"/>
+                <field name="moh_charge"
+                       attrs="{'invisible': [('parent.visible_ehs_only_customize_fields','=',False)]}"/>
+                <field name="custom_charge" attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"/>
+                <field name="installation_charge_provision"
+                       attrs="{'required': [('display_type', '=', False),('parent.is_installation_required','=','yes'), ('installation_charge_provision', '&lt;=', 0.0)],
+                                   'invisible':[('parent.is_installation_required','=','no')]}"/>
+                <field name="landed_cost_per_unit" attrs="{'invisible': [('parent.visible_customize_fields','=',False)],
+                                                               'required': [('display_type', '=', False),('parent.visible_customize_fields','=',True)]}"/>
+                <field name="total_landed_cost"
+                       attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"/>
+                <field name="warranty_duration" attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"/>
+            </xpath>
+            <!--  sale order line tree view           -->
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_template_id']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_template_id']" position="after">
+                <field name="product_part_number" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_readonly']" position="after">
+
+                <field name="supplier_id" optional="show"
+                       attrs="{'column_invisible':[('parent.is_product_available', '=', True)]}"/>
+
+                <field name="supplier_payment_term_id" optional="hide"
+                       attrs="{'column_invisible':[('parent.is_product_available', '=', True)]}"/>
+
+                <field name="unit_buying_price" optional="show"
+                />
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='customer_lead']" position="after">
+                <field name="warranty_duration" attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"
+                       optional="hide"/>
+                <field name="installation_charge_provision" optional="hide"
+                       attrs="{'required': [('display_type', '=', False),('parent.is_installation_required','=','yes'), ('installation_charge_provision', '&lt;=', 0.0)],
+                                   'invisible':[('parent.is_installation_required','=','no')],'column_invisible':[('parent.is_installation_required', '=', 'no')]}"/>
+
+                <field name="expected_supplier_discount" invisible="1"/>
+                <field name="unit_buying_after_discount" invisible="1"/>
+                <field name="landed_cost_per_unit" invisible="1"/>
+
+                <field name="expect_delivery_date" optional="hide"
+                       attrs="{'column_invisible': [('parent.visible_customize_fields','=',False)]}"/>
+                <field name="actual_delivery_date" optional="hide"
+                       attrs="{'column_invisible': [('parent.visible_customize_fields','=',False)]}"/>
+
+                <field name="freight_charge_amt" attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"
+                       optional="show"/>
+                <field name="finance_charge" attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"
+                       optional="hide"/>
+                <field name="moh_charge"
+                       attrs="{'invisible': [('parent.visible_ehs_only_customize_fields','=',False)], 'column_invisible':[('parent.visible_ehs_only_customize_fields', '=', False)]}"
+                       optional="show"/>
+                <field name="custom_charge" attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"
+                       optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="before">
+                <field name="total_landed_cost" optional="show"
+                       attrs="{'invisible': [('parent.visible_customize_fields','=',False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <label for="total_landed_cost_amount"
+                       attrs="{'invisible': [('visible_customize_fields','=',False)]}"/>
+                <div class="text-nowrap" attrs="{'invisible': [('visible_customize_fields','=',False)]}">
+                    <field name="total_landed_cost_amount" nolabel="1" widget="monetary"
+                           options="{'currency_field': 'currency_id'}"/>
+                </div>
+
+                <label for="estimated_gross_margin_profit_amt"
+                       attrs="{'invisible': [('visible_customize_fields','=',False)]}"/>
+                <div class="text-nowrap" attrs="{'invisible': [('visible_customize_fields','=',False)]}">
+                    <field name="estimated_gross_margin_profit_amt" class="oe_inline"/>
+                    <span class="oe_inline">
+                        (<field name="estimated_gross_margin_percentage" nolabel="1" class="oe_inline"
+                                widget="percentage"/>)
+                    </span>
+                </div>
+            </xpath>
+            <field name="fiscal_position_id" position="after">
+                <xpath expr="//field[@name='partner_shipping_id']" position="move"/>
+                <xpath expr="//field[@name='partner_invoice_id']" position="move"/>
+            </field>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_packaging']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="line_no_vertical" invisible="1"/>
+                <div class="alert alert-warning" role="alert" style="font-size:14px;margin-bottom:0px;"
+                     attrs="{'invisible': [('line_no_vertical', '!=', True)]}">
+                    There are order lines without Vertical/Salesperson.
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_tree_inherit" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="create_by_id" widget="many2one_avatar_user" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_form_sale_order_remove_button" model="ir.ui.view">
+        <field name="name">view.form.sale.order.remove.button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='update_prices']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="search_res_partner_customer_sequence" model="ir.ui.view">
+        <field name="name">search.res.partner.customer.sequence</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="customer_sequence"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="sale_order_pivot_inherit" model="ir.ui.view">
+        <field name="name">sale.order.pivot.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sale_order_pivot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="risk_amount" type="measure"/>
+                <field name="risk_gross_margin" type="measure"/>
+                <field name="upside_amount" type="measure"/>
+                <field name="upside_gross_margin" type="measure"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

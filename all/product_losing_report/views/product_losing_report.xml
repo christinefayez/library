@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_losing_tree" model="ir.ui.view">
+        <field name="name">product.losing.report.tree</field>
+        <field name="model">product.losing.report</field>
+        <field name="arch" type="xml">
+            <tree string="Product Losing Report" create="0">
+                <field name="product_id"/>
+                <field name="lot_id" groups="stock.group_production_lot"/>
+                <field name="quantity"/>
+                <field name="total_selling_price"/>
+                <field name="total_cost_price"/>
+                <field name="losing_amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_losing_form" model="ir.ui.view">
+        <field name="name">product.losing.report.form</field>
+        <field name="model">product.losing.report</field>
+        <field name="arch" type="xml">
+            <form string="Product Losing Report" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="lot_id" groups="stock.group_production_lot"/>
+                        <field name="quantity"/>
+                        <field name="total_selling_price"/>
+                        <field name="total_cost_price"/>
+                        <field name="losing_amount"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_product_losing_view_search" model="ir.ui.view">
+        <field name="name">product.losing.report.search</field>
+        <field name="model">product.losing.report</field>
+        <field name="arch" type="xml">
+            <search string="Loose Products">
+                <field name="product_id" string="Product"/>
+                <field name="lot_id" string="Lot/Serial Number"/>
+                <group expand="0" string="Group By">
+                    <filter string="Product" name="groupby_product_id" domain="[]" context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_product_losing_action_view" model="ir.actions.act_window">
+        <field name="name">Product Losing Report</field>
+        <field name="res_model">product.losing.report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_product_losing_tree"/>
+    </record>
+
+       <record id="stock_product_losing_action" model="ir.actions.server">
+            <field name="name">Product Losing Report</field>
+            <field name="model_id" ref="model_product_losing_report"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.get_product_losing_report()
+            </field>
+        </record>
+
+    <menuitem
+            action="stock_product_losing_action"
+            id="stock_product_losing_menu"
+            parent="stock.menu_warehouse_report"/>
+</odoo>

@@ -1,0 +1,23 @@
+<odoo noupdate="1">
+
+    <record id="stage_lead1" model="crm.stage">
+        <field name="name">Lead creation</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="stage_lead2" model="crm.stage">
+        <field name="name">Qualification</field>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="stage_lead3" model="crm.stage">
+        <field name="name">Propose</field>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="stage_lead4" model="crm.stage">
+        <field name="name">Final</field>
+        <field name="sequence">4</field>
+    </record>
+
+</odoo>

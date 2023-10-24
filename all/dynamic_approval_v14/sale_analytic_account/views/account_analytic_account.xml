@@ -1,0 +1,43 @@
+<odoo>
+<!--    <record id="account_analytic_account_form_inherit" model="ir.ui.view">-->
+<!--        <field name="name">account.analytic.account.form.inherit</field>-->
+<!--        <field name="model">account.analytic.account</field>-->
+<!--        <field name="priority" eval="50"/>-->
+<!--        <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='partner_id']" position="after">-->
+<!--                <field name="gross_profit_margin"/>-->
+<!--                <field name="gross_profit_margin_dimension_option"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//sheet" position="inside">-->
+<!--                <group string="Gross Profit Margin Dimension" attrs="{'invisible' : [('gross_profit_margin_dimension_option', '=', False)]}">-->
+<!--                    <field name="gross_profit_margin_dimension_ids"-->
+<!--                           attrs="{'required' : [('gross_profit_margin_dimension_option', '!=', False)]}"-->
+<!--                           nolabel="1">-->
+<!--                        <tree editable="bottom">-->
+<!--                            <field name="lead_type_id" options="{'no_create': True,'no_open': True}"-->
+<!--                                   attrs="{'column_invisible':[('parent.gross_profit_margin_dimension_option', '!=', 'opportunity_type')],'required':[('parent.gross_profit_margin_dimension_option', '=', 'opportunity_type')]}"/>-->
+<!--                            <field name="partner_id" options="{'no_create': True,'no_open': True}"-->
+<!--                                   attrs="{'column_invisible':[('parent.gross_profit_margin_dimension_option', '!=', 'supplier')],'required':[('parent.gross_profit_margin_dimension_option', '=', 'supplier')]}"/>-->
+<!--                            <field name="gross_profit_margin_percentage"/>-->
+<!--                        </tree>-->
+<!--                        <form>-->
+<!--                            <sheet>-->
+<!--                                <group>-->
+<!--                                    <field name="lead_type_id" options="{'no_create': True,'no_open': True}"-->
+<!--                                           attrs="{'required':[('parent.gross_profit_margin_dimension_option', '=', 'opportunity_type')], 'invisible':[('parent.gross_profit_margin_dimension_option', '!=', 'opportunity_type')]}"/>-->
+<!--                                    <field name="partner_id" options="{'no_create': True,'no_open': True}"-->
+<!--                                           attrs="{'required':[('parent.gross_profit_margin_dimension_option', '=', 'supplier')], 'required':[('parent.gross_profit_margin_dimension_option', '!=', 'invisible')]}"/>-->
+<!--                                </group>-->
+<!--                                <group>-->
+<!--                                    <field name="gross_profit_margin_percentage"/>-->
+<!--                                </group>-->
+<!--                            </sheet>-->
+<!--                        </form>-->
+<!--                    </field>-->
+<!--                </group>-->
+<!--            </xpath>-->
+
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

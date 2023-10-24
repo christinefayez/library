@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cost_revenue_dist_form" model="ir.ui.view">
+        <field name="name">cost.revenue.dist.form</field>
+        <field name="model">cost.revenue.dist</field>
+        <field name="arch" type="xml">
+            <form string="Cost and Revenue Dist Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="is_added_automatically" invisible="1"/>
+                            <field name="account_analytic_tag_id" string="Vertical" attrs="{'readonly': [('is_added_automatically', '=', True)]}"/>
+                            <field name="expected_revenue"/>
+                            <field name="expected_cost"/>
+                            <field name="profit_margin_amount"/>
+                        </group>
+                        <group>
+                            <field name="profit_margin_percentage" widget="progressbar"/>
+                            <field name="salesperson" required="1" attrs="{'readonly': [('is_added_automatically', '=', True)]}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="cost_revenue_dist_tree" model="ir.ui.view">
+        <field name="name">cost.revenue.dist.tree</field>
+        <field name="model">cost.revenue.dist</field>
+        <field name="arch" type="xml">
+            <tree string="Cost Revenue Dist Tree">
+                <field name="is_added_automatically" invisible="1"/>
+                <field name="account_analytic_tag_id" string="Vertical"
+                       attrs="{'readonly': [('is_added_automatically', '=', True)]}" force_save="1"/>
+                <field name="expected_revenue" force_save="1"/>
+                <field name="expected_cost" force_save="1"/>
+                <field name="profit_margin_amount"/>
+                <field name="profit_margin_percentage" widget="progressbar"/>
+                <field name="salesperson" required="1"
+                       attrs="{'readonly': [('is_added_automatically', '=', True)]}" force_save="1"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

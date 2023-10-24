@@ -1,0 +1,189 @@
+<odoo>
+
+    <template id="request_loan_report">
+        <t t-call="web.html_container">
+
+            <t t-call="web.external_layout">
+
+
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="row" style="margin-bottom:30px;">
+                        <div class="col-12">
+                            <h2 class="text-center" style="color:red;">Request for Loan</h2>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom:30px;">
+                        <div class="col-6">
+                            <h5>
+                                Employee:
+                                <t t-esc="data_vals['employee']"/>
+                            </h5>
+                            <h5>
+                                Department:
+                                <t t-esc="data_vals['department']"/>
+                            </h5>
+                            <h5>
+                                Loan Amount:
+                                <t t-esc="data_vals['loan_amount']"/>
+                            </h5>
+                            <h5>
+                                Payment Date:
+                                <t t-esc="data_vals['payment_date']"/>
+                            </h5>
+                        </div>
+                        <div class="col-6">
+                            <h5>
+                                Date:
+                                <t t-esc="data_vals['date']"/>
+                            </h5>
+                            <h5>
+                                Job Position:
+                                <t t-esc="data_vals['job_position']"/>
+                            </h5>
+                            <h5>
+                                Installment:
+                                <t t-esc="data_vals['installment']"/>
+                            </h5>
+                            <h5>
+                                Loan Description:
+                                <t t-esc="data_vals['loan_description']"/>
+                            </h5>
+                        </div>
+                    </div>
+                    <table class="table table-sm">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">Payment Date</th>
+                                <th class="text-center">Amount</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="data_vals['lines']" t-as="line">
+                                <tr style="font-weight:bold;color:red;">
+                                    <td scope="row" class="text-center">
+
+                                        <t t-esc="line['date']"/>
+
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-esc="line['amount']"/>
+
+                                    </td>
+
+
+                                </tr>
+
+                                <t t-if="is_detailed">
+
+                                    <t t-foreach="mv_data" t-as="mv_d">
+
+                                        <tr>
+                                            <td scope="row" class="text-right">
+
+                                                <t t-esc="mv['code']"/>
+
+                                            </td>
+                                            <td class="text-right">
+                                                <t t-esc="mv['prod_name']"/>
+
+                                            </td>
+                                            <td class="text-right">
+                                                <t t-esc="mv_d['ref']"/>
+
+                                            </td>
+                                            <td class="text-right">
+                                                <t t-esc="mv_d['date']"/>
+
+                                            </td>
+                                            <td class="text-right">
+                                                <t t-esc="mv_d['serial']"/>
+
+                                            </td>
+
+                                            <td class="text-right">
+                                                <t t-esc="mv_d['initial_balance']"/>
+
+                                            </td>
+                                            <td class="text-right">
+                                                <t t-esc="mv_d['in']"/>
+
+                                            </td>
+                                            <td class="text-right">
+                                                <t t-esc="mv_d['out']"/>
+
+                                            </td>
+                                            <td class="text-right">
+                                                <t t-esc="mv_d['balance_sum']"/>
+
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                    <div class="row text-right">
+                        <div class="col-12">
+                            <h5>Total Amount:
+                                <t t-esc="data_vals['total_amount']"/>
+                            </h5>
+                            <h5>Total Paid
+                                <t t-esc="data_vals['total_amount']"/>
+                            </h5>
+                            <h5>
+                                Balance Amount:
+                                <t t-esc="data_vals['balance_amount']"/>
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="row mt40 mb32" style="margin-top:20px;">
+                        <div class="col-3 bm-2">
+                            <strong>Loan User</strong>
+                            <p t-esc="data_vals['create_user_id']" class="m-0"/>
+                            <img width="90%" t-if="data_vals['create_user_signature']"
+                                 style="margin:0;padding:0"
+                                 t-att-src="image_data_uri(data_vals['create_user_signature'].encode())"/>
+                        </div>
+                        <div class="col-3 bm-2">
+                            <strong>DOO User</strong>
+                            <p t-esc="data_vals['doo_user_id']" class="m-0"/>
+                            <img width="90%" t-if="data_vals['doo_signature']"
+                                 style="margin:0;padding:0"
+                                 t-att-src="image_data_uri(data_vals['doo_signature'].encode())"/>
+                        </div>
+                        <div class="col-3 bm-2">
+                            <strong>DOF User</strong>
+                            <p t-esc="data_vals['dof_user_id']" class="m-0"/>
+                            <img width="90%" t-if="data_vals['dof_signature']"
+                                 style="margin:0;padding:0"
+                                 t-att-src="image_data_uri(data_vals['dof_signature'].encode())"/>
+
+                        </div>
+                        <div class="col-3 bm-2">
+                            <strong>CEO User</strong>
+                            <p t-esc="data_vals['ceo_user_id']" class="m-0"/>
+                            <img width="90%" t-if="(data_vals['ceo_signature'])"
+                                 style="margin:0;padding:0"
+                                 t-att-src="image_data_uri(data_vals['ceo_signature'].encode())"/>
+
+                        </div>
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="print_loan_report_id" model="ir.actions.report">
+        <field name="name">Request Loan Report</field>
+        <field name="model">loan.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">loan_work_flow_app.request_loan_report</field>
+        <field name="report_file">loan_work_flow_app.request_loan_report</field>
+        <field name="binding_model_id" ref="model_loan_report_wizard"/>
+        <field name="binding_type">report</field>
+
+
+    </record>
+</odoo>

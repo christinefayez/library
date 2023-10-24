@@ -1,0 +1,61 @@
+<odoo>
+
+    <record id="hr_appraisal_score_range_form" model="ir.ui.view">
+        <field name="name">hr.appraisal.score.range.form</field>
+        <field name="model">hr.appraisal.score.range</field>
+        <field name="arch" type="xml">
+            <form string="Appraisal Score Range">
+                <div class="oe_title">
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name" placeholder="Outstanding"/>
+                    </h1>
+                </div>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="percentage_from"/>
+                            <field name="percentage_to"/>
+                            <field name="sequence" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_appraisal_score_range_tree" model="ir.ui.view">
+        <field name="name">hr.appraisal.score.range.tree</field>
+        <field name="model">hr.appraisal.score.range</field>
+        <field name="arch" type="xml">
+            <tree string="Appraisal Score Range" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="percentage_from"/>
+                <field name="percentage_to"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_appraisal_score_range_search" model="ir.ui.view">
+        <field name="name">hr.appraisal.score.range.search</field>
+        <field name="model">hr.appraisal.score.range</field>
+        <field name="arch" type="xml">
+            <search string="Appraisal Score Range">
+                <field name="name"/>
+                <field name="percentage_from"/>
+                <field name="percentage_to"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_appraisal_score_range_action" model="ir.actions.act_window">
+        <field name="name">Appraisal Score Range</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.appraisal.score.range</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="hr_appraisal_score_range_menu" name="Appraisal Score Range" parent="hr_appraisal.menu_hr_appraisal_configuration"
+              action="hr_appraisal_score_range_action"/>
+</odoo>

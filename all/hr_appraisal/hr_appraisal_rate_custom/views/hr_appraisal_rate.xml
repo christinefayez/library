@@ -1,0 +1,36 @@
+<odoo>
+
+    <record id="hr_appraisal_rate_custom_form" model="ir.ui.view">
+        <field name="name">hr.appraisal.rate.form</field>
+        <field name="model">hr.appraisal.rate</field>
+        <field name="inherit_id" ref="hr_appraisal_custom.hr_appraisal_rate_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='percentage']" position="before">
+                <field name="number"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_appraisal_rate_custom_tree" model="ir.ui.view">
+        <field name="name">hr.appraisal.rate.tree</field>
+        <field name="model">hr.appraisal.rate</field>
+        <field name="inherit_id" ref="hr_appraisal_custom.hr_appraisal_rate_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='percentage']" position="before">
+                <field name="number"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_appraisal_rate_custom_search" model="ir.ui.view">
+        <field name="name">hr.appraisal.rate.search</field>
+        <field name="model">hr.appraisal.rate</field>
+        <field name="inherit_id" ref="hr_appraisal_custom.hr_appraisal_rate_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='percentage']" position="before">
+                <field name="number"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

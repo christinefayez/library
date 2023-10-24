@@ -1,0 +1,70 @@
+<odoo>
+    <record model="ir.ui.view" id="hr_competency_form">
+        <field name="name">Hr Competency Form</field>
+        <field name="model">hr.competency</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_competency_tree">
+        <field name="name">Hr competency Tree</field>
+        <field name="model">hr.competency</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="code"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="hr_competency_action_window">
+        <field name="name">Hr Competency Action</field>
+        <field name="res_model">hr.competency</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_appraisal_competency_form">
+        <field name="name">Hr Appraisal Competency Form</field>
+        <field name="model">hr.appraisal.competency</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="title"/>
+                        <field name="weight"/>
+                        <field name="fixed"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_appraisal_competency_tree">
+        <field name="name">Hr Appraisal Competency Tree</field>
+        <field name="model">hr.appraisal.competency</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="title"/>
+                <field name="weight"/>
+                <field name="fixed"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="hr_appraisal_competency_action_window">
+        <field name="name">Appraisal competency</field>
+        <field name="res_model">hr.appraisal.competency</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

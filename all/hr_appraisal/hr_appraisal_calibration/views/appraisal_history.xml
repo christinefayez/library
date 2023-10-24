@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="appraisal_history_view_from">
+            <field name="name">appraisal history form</field>
+            <field name="model">appraisal.history</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="appraisal_employee" options="{'no_create': True, 'no_open': True,'no_edit': True}"/>
+                            <field name="appraisal"/>
+                            <field name="hr_overall_rating_final_related"/>
+                            <field name="appraisal_year_related"/>
+                            <field name="appraisal_form_related" options="{'no_create': True, 'no_open': True,'no_edit': True}"/>
+                            <field name="pip_final_decision"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="appraisal_history_tree_view" model="ir.ui.view">
+            <field name="name">appraisal.history.tree.custom</field>
+            <field name="model">appraisal.history</field>
+            <field name="arch" type="xml">
+                <tree string="Appraisal History" create="1" delete="0">
+                    <field name="appraisal_employee"/>
+<!--                    <field name="strata_id" optional="show"/>-->
+                    <field name="appraisal_year_related"/>
+                    <field name="hr_overall_rating_final_related"/>
+                    <field name="appraisal"/>
+                    <field name="appraisal_form_related"/>
+                    <field name="pip_final_decision"/>
+                    <field name="group"/>
+                    <field name="department"/>
+                    <field name="section"/>
+                    <field name="subsection"/>
+                    <field name="line_manager"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="appraisal_history_act_window" model="ir.actions.act_window">
+            <field name="name">Appraisal History</field>
+            <field name="res_model">appraisal.history</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="view_id" ref="appraisal_history_tree_view"/>
+        </record>
+
+        <menuitem name="Appraisal History" id="appraisal_history_menu" parent="hr.menu_hr_root"
+                  action="appraisal_history_act_window" sequence="8" groups="base.user_admin"/>
+
+
+    </data>
+</odoo>

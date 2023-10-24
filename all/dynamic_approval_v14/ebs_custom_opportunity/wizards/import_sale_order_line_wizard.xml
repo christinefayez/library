@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="import_sale_order_wizard_form" model="ir.ui.view">
+            <field name="name">import.sale.order.data.form</field>
+            <field name="model">import.sale.order.data</field>
+            <field name="arch" type="xml">
+                <form string="Import Sale Order Line">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="file_name" invisible="1"/>
+                                <field widget="binary" name="choose_file" filename="file_name"/>
+                                <field name="sale_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button string="Download Template" name="download_sale_order_data" type="object" class="oe_highlight"/>
+                            <button string="Import Template" name="import_sale_order_data" type="object" class="oe_highlight"/>
+                            <button string="Cancel" class="oe_link" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="import_sale_order_data_action" model="ir.actions.act_window">
+            <field name="name">Import Sale Order Line Data</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">import.sale.order.data</field>
+            <field name="view_mode">form</field>
+        </record>
+    </data>
+</odoo>

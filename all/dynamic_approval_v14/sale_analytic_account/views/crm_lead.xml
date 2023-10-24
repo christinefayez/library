@@ -1,0 +1,14 @@
+<odoo>
+
+<!--    <record id="crm_lead_form_inherit" model="ir.ui.view">-->
+<!--        <field name="name">crm.lead.form.inherit</field>-->
+<!--        <field name="model">crm.lead</field>-->
+<!--        <field name="inherit_id" ref="ebs_custom_opportunity.crm_lead_view_form_inherit"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='margin_percentage']" position="after">-->
+<!--                <field name="budgeted_gp" string="budgeted GP%" attrs="{'invisible':[('visible_customize_fields','=',False)]}"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

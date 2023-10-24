@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<!--    <template-->
+<!--            id="assets_backend"-->
+<!--            name="hr_appraisal_objectives_tree"-->
+<!--            inherit_id="web.assets_backend">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <link-->
+<!--                    rel="stylesheet"-->
+<!--                    type="text/css"-->
+<!--                    href="/hr_appraisal_custom/static/src/css/appraisal_objectives_tree.css"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
+</odoo>

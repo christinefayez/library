@@ -1,0 +1,33 @@
+<odoo noupdate="1">
+
+    <record id="one_approval_rate" model="hr.appraisal.rate">
+        <field name="name">1</field>
+        <field name="percentage" eval="20"/>
+    </record>
+
+    <record id="two_approval_rate" model="hr.appraisal.rate">
+        <field name="name">2</field>
+        <field name="percentage" eval="40"/>
+    </record>
+
+    <record id="three_approval_rate" model="hr.appraisal.rate">
+        <field name="name">3</field>
+        <field name="percentage" eval="60"/>
+    </record>
+
+    <record id="four_approval_rate" model="hr.appraisal.rate">
+        <field name="name">4</field>
+        <field name="percentage" eval="80"/>
+    </record>
+
+    <record id="five_approval_rate" model="hr.appraisal.rate">
+        <field name="name">5</field>
+        <field name="percentage" eval="100"/>
+    </record>
+
+    <record id="five_point_five_approval_rate" model="hr.appraisal.rate">
+        <field name="name">5.5</field>
+        <field name="percentage" eval="110"/>
+    </record>
+
+</odoo>

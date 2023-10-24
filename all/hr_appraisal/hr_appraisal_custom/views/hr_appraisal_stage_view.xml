@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="hr_appraisal_stage_form">
+            <field name="name">Hr Appraisal Stage Form</field>
+            <field name="model">hr.appraisal.stage</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="name"/>
+                            <field name="can_complete"/>
+                        </group>
+                        <hr/>
+                        <group string="Appraisal Form">
+                            <group string="Allowed to Edit Appraisal">
+                                <field name="employee_allowed_edit"/>
+                                <field name="manager_allowed_edit"/>
+                                <field name="users_allowed_edit" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Move Forward">
+                                <field name="employee_allowed_forward"/>
+                                <field name="manager_allowed_forward"/>
+                                <field name="users_allowed_forward" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Move Backward">
+                                <field name="log_note_backward"/>
+                                <field name="employee_allowed_backward"/>
+                                <field name="manager_allowed_backward"/>
+                                <field name="users_allowed_backward" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <group string="Objectives">
+                            <group string="Allowed to add Objectives">
+                                <field name="employee_can_add_objective"/>
+                                <field name="manager_can_add_objective"/>
+                                <field name="users_can_add_objective" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Delete/Restore Objectives">
+                                <field name="employee_can_approve_approve"/>
+                                <field name="manager_can_approve_approve"/>
+                                <field name="users_can_approve_approve" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to add Objectives HR Comments">
+                                <field name="employee_can_comment_objective_hr"/>
+                                <field name="manager_can_comment_objective_hr"/>
+                                <field name="users_can_comment_objective_hr" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to add Objectives Manager Comments">
+                                <field name="employee_can_comment_objective_manager"/>
+                                <field name="manager_can_comment_objective_manager"/>
+                                <field name="users_can_comment_objective_manager" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to add Objectives Employee Comments">
+                                <field name="employee_can_comment_objective_employee"/>
+                                <field name="manager_can_comment_objective_employee"/>
+                                <field name="users_can_comment_objective_employee" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Objectives HR Comments">
+                                <field name="employee_can_see_comment_objective_hr"/>
+                                <field name="manager_can_see_comment_objective_hr"/>
+                                <field name="users_can_see_comment_objective_hr" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Objectives Manager Comments">
+                                <field name="employee_can_see_comment_objective_manager"/>
+                                <field name="manager_can_see_comment_objective_manager"/>
+                                <field name="users_can_see_comment_objective_manager" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Objectives Employee Comments">
+                                <field name="employee_can_see_comment_objective_employee"/>
+                                <field name="manager_can_see_comment_objective_employee"/>
+                                <field name="users_can_see_comment_objective_employee" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <group string="Competency">
+                            <group string="Allowed to add Competency">
+                                <field name="employee_can_add_competency"/>
+                                <field name="manager_can_add_competency"/>
+                                <field name="users_can_add_competency" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Delete/Restore competencies">
+                                <field name="employee_can_approve_approve_competency"/>
+                                <field name="manager_can_approve_approve_competency"/>
+                                <field name="users_can_approve_approve_competency" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to add Competencies HR Comments">
+                                <field name="employee_can_comment_competency_hr"/>
+                                <field name="manager_can_comment_competency_hr"/>
+                                <field name="users_can_comment_competency_hr" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to add Competencies Manager Comments">
+                                <field name="employee_can_comment_competency_manager"/>
+                                <field name="manager_can_comment_competency_manager"/>
+                                <field name="users_can_comment_competency_manager" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to add Competencies Employee Comments">
+                                <field name="employee_can_comment_competency_employee"/>
+                                <field name="manager_can_comment_competency_employee"/>
+                                <field name="users_can_comment_competency_employee" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Competencies HR Comments">
+                                <field name="employee_can_see_comment_competency_hr"/>
+                                <field name="manager_can_see_comment_competency_hr"/>
+                                <field name="users_can_see_comment_competency_hr" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Competencies Manager Comments">
+                                <field name="employee_can_see_comment_competency_manager"/>
+                                <field name="manager_can_see_comment_competency_manager"/>
+                                <field name="users_can_see_comment_competency_manager" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Competencies Employee Comments">
+                                <field name="employee_can_see_comment_competency_employee"/>
+                                <field name="manager_can_see_comment_competency_employee"/>
+                                <field name="users_can_see_comment_competency_employee" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <hr/>
+
+                        <group string="Appraisal Comments">
+                            <group string="Allowed to add Appraisal HR Comments">
+                                <field name="employee_can_comment_form_hr"/>
+                                <field name="manager_can_comment_form_hr"/>
+                                <field name="users_can_comment_form_hr" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to add Appraisal Manager Comments">
+                                <field name="employee_can_comment_form_manager"/>
+                                <field name="manager_can_comment_form_manager"/>
+                                <field name="users_can_comment_form_manager" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to add Appraisal Employee Comments">
+                                <field name="employee_can_comment_form_employee"/>
+                                <field name="manager_can_comment_form_employee"/>
+                                <field name="users_can_comment_form_employee" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Appraisal HR Comments">
+                                <field name="employee_can_see_comment_form_hr"/>
+                                <field name="manager_can_see_comment_form_hr"/>
+                                <field name="users_can_see_comment_form_hr" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Appraisal Manager Comments">
+                                <field name="employee_can_see_comment_form_manager"/>
+                                <field name="manager_can_see_comment_form_manager"/>
+                                <field name="users_can_see_comment_form_manager" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Appraisal Employee Comments">
+                                <field name="employee_can_see_comment_form_employee"/>
+                                <field name="manager_can_see_comment_form_employee"/>
+                                <field name="users_can_see_comment_form_employee" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <group string="Training">
+                            <group string="Allowed to Add/Edit Trainings">
+                                <field name="employee_can_modifiy_training"/>
+                                <field name="manager_can_modifiy_training"/>
+                                <field name="users_can_modifiy_training" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <group string="Feedback">
+                            <group string="Allowed to Request Feedback">
+                                <field name="employee_request_feedback"/>
+                                <field name="manager_request_feedback"/>
+                                <field name="users_request_feedback" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to See Feedback">
+                                <field name="employee_see_feedback"/>
+                                <field name="manager_see_feedback"/>
+                                <field name="users_see_feedback" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <!-- <group string="Survey">
+                            <group string="Allowed to take Survey">
+                                <field name="employee_take_survey"/>
+                                <field name="manager_take_survey"/>
+                                <field name="users_take_survey" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to See Survey">
+                                <field name="employee_see_survey"/>
+                                <field name="manager_see_survey"/>
+                                <field name="users_see_survey" widget="many2many_tags"/>
+                            </group>
+                        </group> -->
+                        <hr/>
+                        <group string="Ratings">
+                            <group string="Allowed to do Manager Rating">
+                                <field name="employee_rating_manager_add"/>
+                                <field name="manager_rating_manager_add"/>
+                                <field name="users_rating_manager_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to do Employee Rating">
+                                <field name="employee_rating_employee_add"/>
+                                <field name="manager_rating_employee_add"/>
+                                <field name="users_rating_employee_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to do HR Rating">
+                                <field name="employee_rating_hr_add"/>
+                                <field name="manager_rating_hr_add"/>
+                                <field name="users_rating_hr_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Manager Rating">
+                                <field name="employee_rating_manager_see"/>
+                                <field name="manager_rating_manager_see"/>
+                                <field name="users_rating_manager_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Manager Rating Rounded">
+                                <field name="employee_rating_manager_see_rounded"/>
+                                <field name="manager_rating_manager_see_rounded"/>
+                                <field name="users_rating_manager_see_rounded" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see Employee Rating">
+                                <field name="employee_rating_employee_see"/>
+                                <field name="manager_rating_employee_see"/>
+                                <field name="users_rating_employee_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to see HR Rating">
+                                <field name="employee_rating_hr_see"/>
+                                <field name="manager_rating_hr_see"/>
+                                <field name="users_rating_hr_see" widget="many2many_tags"/>
+                            </group>
+                        </group>
+
+                        <hr/>
+                        <group string="PIP Form">
+                            <group string="Allowed to See Areas of Development">
+                                <field name="employee_area_development_see"/>
+                                <field name="manager_area_development_see"/>
+                                <field name="users_area_development_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Add Areas of Development">
+                                <field name="employee_area_development_add"/>
+                                <field name="manager_area_development_add"/>
+                                <field name="users_area_development_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to See 1st Month Review by Manager Comments">
+                                <field name="employee_first_manager_review_see"/>
+                                <field name="manager_first_manager_review_see"/>
+                                <field name="users_first_manager_review_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Add 1st Month Review by Manager Comments">
+                                <field name="employee_first_manager_review_add"/>
+                                <field name="manager_first_manager_review_add"/>
+                                <field name="users_first_manager_review_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to See 1st Month Employee Review">
+                                <field name="employee_first_employee_review_see"/>
+                                <field name="manager_first_employee_review_see"/>
+                                <field name="users_first_employee_review_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Add 1st Month Employee Review">
+                                <field name="employee_first_employee_review_add"/>
+                                <field name="manager_first_employee_review_add"/>
+                                <field name="users_first_employee_review_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to See 2nd Month Review by Manager Comments">
+                                <field name="employee_second_manager_review_see"/>
+                                <field name="manager_second_manager_review_see"/>
+                                <field name="users_second_manager_review_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Add 2nd Month Review by Manager Comments">
+                                <field name="employee_second_manager_review_add"/>
+                                <field name="manager_second_manager_review_add"/>
+                                <field name="users_second_manager_review_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to See 2nd Month Employee Review">
+                                <field name="employee_second_employee_review_see"/>
+                                <field name="manager_second_employee_review_see"/>
+                                <field name="users_second_employee_review_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Add 2nd Month Employee Review">
+                                <field name="employee_second_employee_review_add"/>
+                                <field name="manager_second_employee_review_add"/>
+                                <field name="users_second_employee_review_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to See 3rd Month Review by Manager Comments">
+                                <field name="employee_third_manager_review_see"/>
+                                <field name="manager_third_manager_review_see"/>
+                                <field name="users_third_manager_review_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Add 3rd Month Review by Manager Comments">
+                                <field name="employee_third_manager_review_add"/>
+                                <field name="manager_third_manager_review_add"/>
+                                <field name="users_third_manager_review_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to See 3rd Month Employee Review">
+                                <field name="employee_third_employee_review_see"/>
+                                <field name="manager_third_employee_review_see"/>
+                                <field name="users_third_employee_review_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Add 3rd Month Employee Review">
+                                <field name="employee_third_employee_review_add"/>
+                                <field name="manager_third_employee_review_add"/>
+                                <field name="users_third_employee_review_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to See Manager Final Decision">
+                                <field name="employee_manager_final_decision_see"/>
+                                <field name="manager_manager_final_decision_see"/>
+                                <field name="users_manager_final_decision_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Add Manager Final Decision">
+                                <field name="employee_manager_final_decision_add"/>
+                                <field name="manager_manager_final_decision_add"/>
+                                <field name="users_manager_final_decision_add" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to See Manager Final Comments">
+                                <field name="employee_manager_final_comments_see"/>
+                                <field name="manager_manager_final_comments_see"/>
+                                <field name="users_manager_final_comments_see" widget="many2many_tags"/>
+                            </group>
+                            <group string="Allowed to Add Manager Final Comments">
+                                <field name="employee_manager_final_comments_add"/>
+                                <field name="manager_manager_final_comments_add"/>
+                                <field name="users_manager_final_comments_add" widget="many2many_tags"/>
+                            </group>
+                        </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_appraisal_stage_tree">
+            <field name="name">Hr Appraisal Stage Tree</field>
+            <field name="model">hr.appraisal.stage</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="hr_appraisal_stage_action_window">
+            <field name="name">Appraisal Stages</field>
+            <field name="res_model">hr.appraisal.stage</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Appraisal Stages" id="hr_appraisal_custom.hr_appraisal_stage_menu"
+                  parent="hr_appraisal.menu_hr_appraisal_configuration"
+                  action="hr_appraisal_custom.hr_appraisal_stage_action_window"/>
+
+    </data>
+</odoo>

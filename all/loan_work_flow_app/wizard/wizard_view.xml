@@ -1,0 +1,18 @@
+<odoo>
+    <record id="wizard_loan_report_id" model="ir.ui.view">
+        <field name="name">loan.report.wizard.form</field>
+        <field name="model">loan.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <field name="loan_id"/>
+                    <footer>
+                        <button name="action_print_report" string="Submit" type="object" class="btn-primary"
+                                data-hotkey="q"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

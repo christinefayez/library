@@ -1,0 +1,7 @@
+<odoo noupdate="1">
+    <record id="minlength" model="ir.config_parameter">
+        <field name="key">web_m2x_options.create</field>
+        <field name="value">False</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+account_analytic_gross_profit_margin_dimension_user,account.analytic.gross.profit.margin.dimension,model_account_analytic_gross_profit_margin_dimension,base.group_user,1,0,0,0
+account_analytic_gross_profit_margin_dimension_account_user,account.analytic.gross.profit.margin.dimension.account.user,model_account_analytic_gross_profit_margin_dimension,account.group_account_user,1,1,1,1

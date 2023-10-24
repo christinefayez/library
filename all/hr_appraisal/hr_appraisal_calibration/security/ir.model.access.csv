@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_appraisal_history,appraisal.history,model_appraisal_history,,1,1,1,1
+access_calibration_view,access_calibration_view,model_calibration_view,,1,1,1,1
+access_hr_calibration,hr.calibration,model_hr_calibration,,1,1,1,1
+access_hr_performance_target,hr.performance.target,model_hr_performance_target,,1,1,1,1
+access_calibration_report_view,calibration.report.view,model_calibration_report_view,,1,1,1,1
+access_calibration_report_view_grouped_department,calibration.report.view.grouped.d,model_calibration_report_view_grouped_d,,1,1,1,1
+access_calibration_report_view_grouped_rating,calibration.report.view.grouped.r,model_calibration_report_view_grouped_r,,1,1,1,1

@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="action_process_appraisal_stage" model="ir.actions.server">
+            <field name="name">Process</field>
+            <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>
+            <field name="binding_model_id" ref="hr_appraisal.model_hr_appraisal"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.process_appraisal_stage()</field>
+        </record>
+    </data>
+</odoo>

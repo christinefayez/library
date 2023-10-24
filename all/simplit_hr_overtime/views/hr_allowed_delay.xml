@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+		<record id="simplit_allowed_delay_tree" model="ir.ui.view">
+			<field name="name">simplit.hr.delay.tree</field>
+			<field name="model">simplit.hr.delay</field>
+			<field name="arch" type="xml">
+				<tree string="Delayed Records">
+					<field name="employee_id"/>
+					<field name="manager_id"/>
+					<field name="start_date"/>
+					<field name="late_login"/>
+					<field name="type_penality"/>
+					<field name="monthly_delay" widget="float_time"/>
+					<field name="delay_time" string="Delayed Time" widget="float_time"/>
+					<field name="approved_delay" string="Approved Delayed Hours" widget="float_time"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		 </record>
+
+		<record id="simplit_delay_time_management_search" model="ir.ui.view">
+			<field name="name">simplit.hr.delay.search</field>
+			<field name="model">simplit.hr.delay</field>
+			<field name="arch" type="xml">
+				<search string="Delayed Records">
+					<field name="employee_id"/>
+					<field name="manager_id"/>
+					<field name="start_date"/>
+					<separator/>
+					 <group expand="1" string="Group By">
+						<filter string="Employee" name="employee_id" context="{'group_by':'employee_id'}"/>
+						<filter string="Manager" name="manager_id" context="{'group_by':'manager_id'}"/>
+						<filter string="Date" name="start_date" context="{'group_by':'start_date'}"/>
+						 <filter string="State" name="state" context="{'group_by':'state'}"/>
+					 </group>
+				</search>
+			</field>
+		</record>
+
+		<record id="simplit_allowed_delay_management_form" model="ir.ui.view">
+			<field name="name">simplit.hr.delay.form</field>
+			<field name="model">simplit.hr.delay</field>
+			<field name="arch" type="xml">
+				<form string="Delay Records">
+				<header>
+					<button name="action_submit" type="object" string="Submit" groups="base.group_user" attrs="{'invisible':[('state', '!=', 'draft')]}"/>
+					<button name="action_cancel" type="object" string="Cancel" groups="base.group_user,hr.group_hr_manager" attrs="{'invisible':[('state', '!=', 'confirm')]}"/>
+					<button name="action_approve" type="object" string="Approve" groups="hr.group_hr_manager" attrs="{'invisible':[('state', '!=', 'confirm')]}"/>
+					<button name="action_refuse" type="object" string="Refuse" groups="hr.group_hr_manager" attrs="{'invisible':[('state', '!=', 'confirm')]}"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,confirm,refuse,validate,cancel"/>
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="employee_id"/>
+							<field name="manager_id"/>
+							<field name="monthly_delay" widget="float_time"/>
+							<field name="approved_delay"/>
+						</group>
+						<group>
+							<field name="start_date"/>
+							<field name="late_login"/>
+							<field name="delay_time" string="Delayed Time(Minutes)" widget="float_time"/>
+						</group>
+					</group>
+				   <notebook>
+						<page string="Notes">
+							<field name="notes"/>
+						</page>
+				   </notebook>
+				</sheet>
+			   </form>
+			</field>
+		</record>
+
+		<record id="action_simplit_delay_time_management" model="ir.actions.act_window">
+			<field name="name">Delay Time</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">simplit.hr.delay</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="simplit_delay_time_management_search"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Create Delay Time Request
+				</p>
+			</field>
+		</record>
+
+
+
+		 <record id="simplit_allowed_delay_approval_tree" model="ir.ui.view">
+			<field name="name">simplit.hr.delay.tree</field>
+			<field name="model">simplit.delay.approval</field>
+			<field name="arch" type="xml">
+				<tree string="Delayed Records">
+					<field name="employee_id"/>
+					<field name="manager_id"/>
+					<field name="total_delay_time" widget="float_time"/>
+					<field name="delay_approve" widget="float_time"/>
+					<field name="monthly_allow_delay" widget="float_time"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		 </record>
+
+		 <record id="simplit_delay_time_approval_management_search" model="ir.ui.view">
+			<field name="name">simplit.hr.delay.search</field>
+			<field name="model">simplit.delay.approval</field>
+			<field name="arch" type="xml">
+				<search string="Delayed Records">
+					<field name="employee_id"/>
+					<field name="manager_id"/>
+					<field name="state"/>
+					<separator/>
+					 <group expand="1" string="Group By">
+						<filter string="Employee" name="employee_id" context="{'group_by':'employee_id'}"/>
+						<filter string="Manager" name="manager_id" context="{'group_by':'manager_id'}"/>
+						<filter string="state" name="state" context="{'group_by':'state'}"/>
+						<!-- <filter string="State" name="state" context="{'group_by':'state'}"/> -->
+					 </group>
+				</search>
+			</field>
+		</record>
+
+		 <record id="simplit_allowed_delay_approval_form" model="ir.ui.view">
+			<field name="name">simplit.hr.delay.form</field>
+			<field name="model">simplit.delay.approval</field>
+			<field name="arch" type="xml">
+				<form string="Overtime Records">
+				<header>
+					<button name="action_submit" type="object" string="Submit" groups="base.group_user" attrs="{'invisible':[('state', '!=', 'draft')]}"/>
+					<button name="action_cancel" type="object" string="Cancel" groups="base.group_user,hr.group_hr_manager" attrs="{'invisible':[('state', '!=', 'confirm')]}"/>
+					<button name="action_approve" type="object" string="Approve" groups="hr.group_hr_manager" attrs="{'invisible':[('state', '!=', 'confirm')]}"/>
+					<button name="action_refuse" type="object" string="Refuse" groups="hr.group_hr_manager" attrs="{'invisible':[('state', '!=', 'confirm')]}"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,confirm,refuse,validate,cancel"/>
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="employee_id"/>
+							<label for="approval_from" string="Period"/>
+		                    <div>
+		                        <field name="approval_from" class="oe_inline"/> - <field name="approval_to" class="oe_inline"/>
+		                    </div>
+							<field name="manager_id"/>
+						</group>
+						<group>
+							<field name="total_delay_time" readonly="1" widget="float_time"/>
+							<field name="delay_approve" widget="float_time"/>
+							<field name="monthly_allow_delay" widget="float_time"/>
+						</group>
+					</group>
+				</sheet>
+			   </form>
+			</field>
+		</record>
+
+		<record id="action_simplit_allowed_delay_approval" model="ir.actions.act_window">
+			<field name="name">Total DelayTime</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">simplit.delay.approval</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="simplit_delay_time_approval_management_search"/>
+		</record>
+
+		<menuitem id="menu_action_simplit_allowed_delay_approval" name="Delayed Records Approval"
+			parent="hr_attendance.menu_hr_attendance_my_attendances" action="action_simplit_allowed_delay_approval"/>
+
+
+		<record id="hr_contract_view_delay_time" model="ir.ui.view">
+			<field name="name">hr.contract.delay.time</field>
+			<field name="model">hr.contract</field>
+			<field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='resource_calendar_id']" position="after">
+						<field name="bonus_interval"/>
+						<field name="quarter_date" invisible="1"/>
+						<field name="yearly_date" invisible="1"/>
+						<label for="kpi_quarterly" attrs="{'invisible': [('bonus_interval', '=', 'annual')]}"/>
+						<div class="o_row">
+							<field name="kpi_quarterly" attrs="{'invisible': [('bonus_interval', '=', 'annual')]}"/><span>%%</span>
+						</div>
+						<label for="kpi_annually" attrs="{'invisible': [('bonus_interval', '=', 'quarterly')]}"/>
+						<div class="o_row">
+							<field name="kpi_annually"  attrs="{'invisible': [('bonus_interval', '=', 'quarterly')]}"/><span>%%</span>
+						</div>
+					</xpath>
+					<!-- <xpath expr='//group[@name="other_advantages"]' position="attributes">
+						<attribute name="invisible">True</attribute>
+					</xpath> -->
+
+<!--					<xpath expr="//group[@name='allowanc_deduction']" position="after">-->
+<!--		               	<group string="Delays and Overtime" name="overtime_delay">-->
+<!--			               	<field name="employee_allowed_delay"/>-->
+<!--			               	<field name="monthly_allowed_delay" widget="float_time"/>-->
+<!--			               &lt;!&ndash; 	<label for="allowed_delay_month"/>-->
+<!--							<div class="o_row">-->
+<!--								<field name="allowed_delay_month"/><span> /month</span>-->
+<!--							</div> &ndash;&gt;-->
+<!--							<field name="employee_allowed_overtime"/>-->
+<!--							<field name="var_overtime_pay"/>-->
+<!--							<field name="var_delay_pay"/>-->
+<!--						</group>-->
+<!--					</xpath>-->
+				</data>
+			</field>
+		</record>
+
+		<!-- <record id="hr_attendance_view_filter_attend_inherit" model="ir.ui.view">
+	        <field name="name">hr_attendance_view_filter_inherit</field>
+	        <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"></field>
+	        <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <filter name="state" string="State" context="{'group_by':'state'}"/>
+                </xpath>
+	        </field>
+	    </record> -->
+		<record id="hr_attendance_delaytime_view_form" model="ir.ui.view">
+			<field name="name">hr.attendance.form2</field>
+			<field name="model">hr.attendance</field>
+			<field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='overtime_created']" position="after">
+						<field name="delaytime_created" invisible="1"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+		<record id="hr_attendance_tree_inherited" model="ir.ui.view">
+			<field name="name">hr.attendance.tree</field>
+			<field name="model">hr.attendance</field>
+			<field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='check_out']" position="after">
+						<field name="early_in" widget="float_time" />
+						<field name="early_out" widget="float_time" />
+						<field name="late_in" widget="float_time" />
+						<field name="late_out" widget="float_time" />
+						<field name="attendance_overtime" widget="float_time" />
+						<field name="attendance_undertime" widget="float_time" />
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="hr_config_settings_delay_view_form" model="ir.ui.view">
+			<field name="name">delay</field>
+			<field name="model">res.config.settings</field>
+			<field name="inherit_id" ref="hr.res_config_settings_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//div[@data-key='hr']/div[1]" position="inside">
+					 	<div class="col-12 col-lg-6 o_setting_box">
+							<div class="o_setting_right_pane">
+								<label for="penalty_type_settings"/>
+								<field name="penalty_type_settings"/>
+							</div>
+                            <div class="o_setting_right_pane">
+								<label for="allowed_delay_time_setting" attrs="{'invisible': [('penalty_type_settings', '=', 'none')]}"/>
+								<field name="allowed_delay_time_setting" attrs="{'invisible': [('penalty_type_settings', '=', 'none')]}"/>
+							</div>
+							<div class="o_setting_right_pane">
+								<label for="penalty_amount_settings" attrs="{'invisible': ['|',('penalty_type_settings', '=', 'based_on_wage'),('penalty_type_settings', '=', 'none')]}"/>
+								<field name="penalty_amount_settings"  attrs="{'invisible': ['|',('penalty_type_settings', '=', 'based_on_wage'),('penalty_type_settings', '=', 'none')]}"/>
+							</div>
+<!--							<div class="o_setting_right_pane">-->
+<!--								<label for="half_pay_settings" attrs="{'invisible': ['|',('penalty_type_settings', '=', 'fixed_penalty'),('penalty_type_settings', '=', 'none')]}"/>-->
+<!--								<field name="half_pay_settings" attrs="{'invisible': ['|',('penalty_type_settings', '=', 'fixed_penalty'),('penalty_type_settings', '=', 'none')]}"/>-->
+<!--							</div>-->
+<!--							<div class="o_setting_right_pane">-->
+<!--								<label for="threeforth_pay_settings" attrs="{'invisible': ['|',('penalty_type_settings', '=', 'fixed_penalty'),('penalty_type_settings', '=', 'none')]}"/>-->
+<!--								<field name="threeforth_pay_settings" attrs="{'invisible': ['|',('penalty_type_settings', '=', 'fixed_penalty'),('penalty_type_settings', '=', 'none')]}"/>-->
+<!--							</div>-->
+<!--							<div class="o_setting_right_pane">-->
+<!--								<label for="full_pay_settings" attrs="{'invisible': ['|',('penalty_type_settings', '=', 'fixed_penalty'),('penalty_type_settings', '=', 'none')]}"/>-->
+<!--								<field name="full_pay_settings" attrs="{'invisible': ['|',('penalty_type_settings', '=', 'fixed_penalty'),('penalty_type_settings', '=', 'none')]}"/>-->
+<!--							</div>-->
+                        </div>
+				</xpath>
+			</field>
+		</record>
+
+
+		<menuitem id="menu_action_simplit_delay_time_management" name="Delayed Records" parent="hr_attendance.menu_hr_attendance_my_attendances"
+				  action="action_simplit_delay_time_management"/>
+
+		<record id="view_hr_payslip_form_inherits_for_delay" model="ir.ui.view">
+			<field name="name">hr.payslip.form.delay</field>
+			<field name="model">hr.payslip</field>
+			<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='credit_note']" position="after">
+					<field name="late_logins_of_month" string="Number of Delays" invisible="1"/>
+					<field name="penalty" string="Penalty" readonly="1" invisible="1"/>
+					<field name="total_delay_time" string="Delay Time" readonly="1" invisible="1" widget="float_time"/>
+					<field name="fixed" invisible="1"/>
+					<field name="wage"  invisible="1"/>
+					<field name="kpi_value"/>
+				</xpath>
+				<xpath expr="//div[@name='button_box']" position="inside">
+					<button icon="fa-clock-o"
+							name="delay_time_view"
+							class="oe_stat_button"
+							string="Delay"
+							type="object">
+							<field name="total_delay_time" help="Total Delays"/>
+					</button>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="hr_worklocation_tree" model="ir.ui.view">
+			<field name="name">hr.worklocation.tree</field>
+			<field name="model">hr.worklocation</field>
+			<field name="arch" type="xml">
+				<tree string="Wrok Location">
+					<field name="name"/>
+				</tree>
+			</field>
+		 </record>
+
+
+		<record id="hr_worklocation_form" model="ir.ui.view">
+			<field name="name">hr.worklocation.form</field>
+			<field name="model">hr.worklocation</field>
+			<field name="arch" type="xml">
+				<form string="Wrok Location">
+				<group>
+					<group>
+						<field name="name"/>
+					</group>
+				</group>
+				</form>
+			</field>
+		 </record>
+
+		 <record id="action_hr_worklocation" model="ir.actions.act_window">
+			<field name="name">Work Location</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.worklocation</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Create Work Locations
+				</p>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_emp_form_inherit">
+			<field name="name">hr.emp.form.inherit</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//div[@class='oe_title']" position="after">
+					<div class="oe_title_arabic">
+						<label for="name_in_arabic" class="oe_edit_only"/>
+						<h1><field name="name_in_arabic" placeholder="Employee's Name in Arabic"/>
+					</h1>
+				</div>
+				</xpath>
+			</field>
+		</record>
+
+		<menuitem id="menu_action_hr_worklocation"
+			name="Work Locations"
+			parent="hr.menu_human_resources_configuration"
+			action="action_hr_worklocation"/>
+
+		<!-- inherit res.company form view -->
+		<record id="inherit_view_company_form_ovt" model="ir.ui.view">
+			<field name="name">inherit.view.company.form.ovt</field>
+			<field name="model">res.company</field>
+			<field name="inherit_id" ref="base.view_company_form"/>
+			<field name="arch" type="xml">
+				<field name="parent_id" position="after">
+					<field name="overtime_pay_type"/>
+					<field name="penalty_type"/>
+				</field>
+			</field>
+		</record>
+
+		<record id="delay_partial_approval_wizard_action_server" model="ir.actions.server">
+            <field name="name">Delay Partial Approval</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_simplit_hr_delay"/>
+             <field name="binding_model_id" ref="model_simplit_hr_delay"/>
+            <field name="state">code</field>
+            <field name="code">action=records.get_the_action_of_partial_approval()</field>
+        </record>
+	</data>
+</odoo>

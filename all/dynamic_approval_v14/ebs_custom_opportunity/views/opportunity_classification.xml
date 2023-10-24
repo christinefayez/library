@@ -1,0 +1,25 @@
+<odoo>
+
+    <record id="opportunity_classification_view_tree" model="ir.ui.view">
+        <field name="name">opportunity.classification.view.tree</field>
+        <field name="model">opportunity.classification</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="is_tender" widget="boolean_toggle"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="opportunity_classification_action" model="ir.actions.act_window">
+        <field name="name">Opportunity Classification</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">opportunity.classification</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="Opportunity_classification_menu" name="Opportunity Classification" parent="crm.crm_menu_config"
+              action="opportunity_classification_action"/>
+
+</odoo>

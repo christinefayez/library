@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="hr_appraisal_form_form">
+            <field name="name">Hr Appraisal Form</field>
+            <field name="model">hr.appraisal.form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="%(create_hr_mass_appraisal_view_action)d"
+                                string="Create Mass Appraisals"
+                                type="action" class="oe_highlight"
+                                context="{                  'default_related_appraisal_form':id,
+                                                        }"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+<!--                                <field name="from_grade_num"/>-->
+<!--                                <field name="to_grade_num"/>-->
+                                <field name="filter_by"/>
+                                <field name="grade_ids" attrs="{'invisible':[('filter_by','=','job_ids')],'required':[('filter_by','=','grade_ids')]}" widget="many2many_tags"/>
+                                <field name="job_ids" attrs="{'invisible':[('filter_by','=','grade_ids')],'required':[('filter_by','=','job_ids')]}" widget="many2many_tags"/>
+                                <field name="max_objective"/>
+                                <field name="min_objective"/>
+                                <field name="max_competency"/>
+                                <field name="min_competency"/>
+                                <field name="period_id"/>
+                                <field name="includes_calibration"/>
+                                <field name="always_release_ratings"/>
+                            </group>
+                            <group>
+                                <field name="starting_stage"/>
+                                <field name="all_stages" widget="many2many_tags"/>
+                                <field name="related_contract_subgroup" widget="many2many_tags"/>
+                                <!-- <field name="default_survey_id"/> -->
+                            </group>
+                        </group>
+                        <group>
+                            <field name="default_related_objective"/>
+                        </group>
+                        <group>
+                            <field name="default_related_competency"/>
+                        </group>
+                        <group>
+                            <field name="calculation_rules">
+                                <tree editable="bottom">
+                                    <field name="from_value"/>
+                                    <field name="to_value"/>
+                                    <field name="value"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_appraisal_form_tree">
+            <field name="name">Hr Appraisal Form Tree</field>
+            <field name="model">hr.appraisal.form</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="hr_appraisal_form_action_window">
+            <field name="name">Appraisal Forms</field>
+            <field name="res_model">hr.appraisal.form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Appraisal Forms" id="hr_appraisal_custom.hr_appraisal_form_menu"
+                  parent="hr_appraisal.menu_hr_appraisal_configuration"
+                  action="hr_appraisal_custom.hr_appraisal_form_action_window"/>
+
+    </data>
+</odoo>
