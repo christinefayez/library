@@ -42,7 +42,6 @@ class LibraryBook(models.Model):
     old_edition = fields.Many2one(comodel_name="library.book")
     name = fields.Char('Title', required=True)
     isban = fields.Char('ISBAN', required=True)
-    date_release = fields.Date('Release Date')
     author_ids = fields.Many2many(
         'res.partner',
         string='Authors'
@@ -126,7 +125,7 @@ class LibraryBook(models.Model):
             d = today - timedelta(days=book.age_days)
             print(d)
             print('dataaaaaaa',book.date_release)
-        book.date_release = d
+            book.date_release = d
 
     @api.constrains('date_release')
     def _check_date(self):
@@ -156,7 +155,6 @@ class LibraryBook(models.Model):
             else:
                 msg = _('moving from %s to %s is not allowed') % (book.state, new_state)
                 raise ValidationError(msg)
-                continue
 
     def make_borrowed(self):
         self.change_state('borrowed')
